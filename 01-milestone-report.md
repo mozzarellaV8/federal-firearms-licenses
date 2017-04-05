@@ -14,7 +14,7 @@ Can general characteristics on the American population provide insight relating 
 Or conversely - by examining Federal Firearms License data, can something be learned about the American population? 
 
 # Inversely Proportional?
-## _**Initial Discoveries in Firearms Licenses and Populations**_
+## **Initial Discoveries with Firearms Licenses and Populations**
 
 Staring out simply: which states have the most Federal Firearms Licenses (FFLs), and which states are the most populous?
 
@@ -28,8 +28,10 @@ Another quick bar chart might clear things up - with _per capita FFLs_ mapped to
 
 While Texas has many more _total_ FFLs than Wyoming or Montana, when adjusted per capita the FFL-to-resident ratio appears average.
 
-_**Adjusting for 10,000 residents**_: 
-There's just over 10 Federal Firearms Licenses for every 10,000 residents of Wyoming and Montana, compared to less than 2.5 for Texas. Further, there is less than 1 Federal Firearms License per 10,000 for New York and California - the most populous states in the US. 
+There's just over 10 Federal Firearms Licenses for every 10,000 residents of Wyoming and Montana, compared to less than 2.5 for Texas. There's _less than one_ Federal Firearms License for every 10,000 for New Yorkers or Californians - two of the most populous states in the US. 
+
+Per 100,000 adjusted - there is one Federal Firearms License for every 1,000 residents of Wyoming or Montana. 1:1000. 
+
 
 ![ffl-eda](presentation/vis/ffl-eda-scatterplot-01-V2.jpg)
 
@@ -79,7 +81,8 @@ Things that came to mind were **land area**, **urban vs. rural population**, and
 - **Build a set of features of the American public in relation to firearms licenses**. These 'features' include **educational**, **economic**, **legislative**, **race**, and **workforce** characteristics by state.
 - **Establish broad patterns and identify outliers in US firearm culture**. By providing an overview of firearms trends and anomolies across the states, more specific questions can be asked in regards to firearms. 
 - **Provide a foundation for further exploration**, with finer grain data in any of the above mentioned fields. For example - if the relationship between _**working class industry**_ and _**firearms licenses**_ was of interest, then finer grain data than that provided by the US Census could be used to cross-compare against firearms data provided by the ATF. 
-- Again, because of exceptions in certain laws, and the existence of black market trade - only Federal Firearms Licenses will be considered. FFLs, in this case, can be considered a certain 'metric' for a United States concensus on what is permissible (and possibly, extreme) in firearms culture.
+
+Again, because of exceptions in certain laws, and the existence of black market trade - only Federal Firearms Licenses will be considered. FFLs, in this case, can be considered a certain 'metric' for a United States concensus on what is permissible (and possibly extreme) in firearms culture.
 
 ## United States Census
 
