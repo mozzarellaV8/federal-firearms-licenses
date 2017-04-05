@@ -22,6 +22,9 @@ library(ggplot2)
 library(corrplot)
 library(zoo)
 
+source("R/00-capwords.R")
+setwd("~/GitHub/federal-firearms-licenses")
+
 race <- read.csv("data/01-US-Census/2014-electorate/2014-table4b-race.csv")
 str(race)
 
@@ -105,7 +108,7 @@ race.pop <- race.population %>%
 race.pop <- race.pop[-c(9, 45), ]
 
 # output csv of totals
-write.csv(race.pop, file = "data/04-total-data-clean/us-census-race.csv", row.names = F)
+write.csv(race.pop, file = "~/GitHub/ffl-data/04-total-data-clean/us-census-race.csv", row.names = F)
 
 # Race: Per Capita Values -----------------------------------------------------
 
@@ -125,4 +128,10 @@ perCapita.race(race.pop$Asian)[1]                   # [1] 131597.2
 race.perCapita <- race.pop %>%
   mutate_each(funs(perCapita.race), 2:12)
 
-write.csv(race.perCapita, file = "data/05-per-capita-clean/per-capita-race.csv", row.names = F)
+colnames(race.perCapita)[1] <- "NAME"
+race.perCapita$NAME <- tolower(race.perCapita$NAME)
+race.perCapita$NAME <- capwords(race.perCapita$NAME)
+
+race.perCapita$NAME <- factor(race.perCapita$NAME)
+
+write.csv(race.perCapita, file = "data/04-per-capita-clean/per-capita-race.csv", row.names = F)
