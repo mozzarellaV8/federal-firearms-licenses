@@ -16,7 +16,7 @@ source("R/00-pd-themes.R")
 source("R/00-usa-map-prep.R")
 
 # total and per capita full-time education data
-education <- read.csv("data/05-per-capita-clean/per-capita-education.csv", stringsAsFactors = F)
+education <- read.csv("data/04-per-capita-clean/per-capita-education.csv", stringsAsFactors = F)
 
 str(education)
 # 50 obs of 55 variables
@@ -29,11 +29,11 @@ edu <- education %>%
   select(NAME, perCapitaFFL, POPESTIMATE2015, POPESTIMATE2016,
          contains("HS"), contains("BA"), -contains("Less"))
 
-str(edu)
-# 50 obs of 34 variables
-
 # clean up variable names
 colnames(edu) <- gsub("edu.[0-9][0-9].Total", "per.capita", colnames(edu))
+
+str(edu)
+# 50 obs of 34 variables
 
 # Regression Tree -------------------------------------------------------------
 
@@ -414,19 +414,13 @@ ggplot(edu, aes(per.capita.35to44.HS.Female,
 
 # state names for labels
 ggplot(edu, aes(per.capita.18to24.BA, 
-                perCapitaFFL, 
+                perCapitaFFL,
                 label = NAME, 
                 size = perCapitaFFL)) +
-  geom_segment(x = 5435, xend = 5435, y = 0, yend = 10000, 
-               linetype = "dashed", color = "red3", size = 0.375) +
-  geom_segment(x = 5435, xend = 10000, y = 4765, yend = 4765, 
-               linetype = "dashed", color = "red3", size = 0.25) +
-  geom_smooth(method = "lm", se = F, 
-              linetype = "dotted",
-              color = "cadetblue3",
-              size = 0.8) +
-  geom_point(aes(color = perCapitaFFL)) +
-  scale_color_gradient2(low = "deepskyblue4",
+  geom_point(aes(fill = perCapitaFFL, 
+                 alpha = perCapitaFFL/100), 
+             shape = 21) +
+  scale_fill_gradient2(low = "deepskyblue4",
                         mid = "antiquewhite2",
                         high = "firebrick4", 
                         midpoint = 52, 
@@ -437,14 +431,14 @@ ggplot(edu, aes(per.capita.18to24.BA,
   geom_text(aes(per.capita.18to24.BA, 
                 perCapitaFFL,
                 label = NAME,
-                size = perCapitaFFL/75), 
+                size = perCapitaFFL/200), 
             hjust = -0.01, vjust = -0.55, 
             check_overlap = T, 
             family = "GillSans", 
             data = edu) +
   pd.facet + 
   expand_limits(y = c(0, 120)) +
-  theme(legend.position = "right",
+  theme(legend.position = "none",
         legend.title = element_text(size = 10),
         panel.grid = element_line(color = "gray82")) +
   labs(y = "Federal Firearms Licenses per 100,000", 
