@@ -1,16 +1,36 @@
-# Federal Firearms Licenses in the United States
+# Federal Firearms Licenses and United States Populations
 
-Mass shootings are an unfortunate [characteristic of the United States](https://en.wikipedia.org/wiki/Category:Mass_shootings_in_the_United_States_by_year)<sup>[1](#notes)</sup>, and generally their occurence is the main time that issues of firearms are brought to national attention. While accusations, greivances, and demands are publicly aired - it's difficult to discern if changes actually happen or if causes are truly discovered. 
+### What is this project trying to do?
 
-This project doesn't aim to find the root causes of gun violence; rather, it seeks to understand broader characterstics of America and it's relationship to firearms. Looking at data from state to state, different features - such as education, economics, and legislation - can be examined in relation to firearms. Ideally this project would establish general features of state populations and look at how those features relate to the number of firearms - while resisting naming single causes or claiming ground-truths.
+The **ATF** publishes data monthly on all **Federal Firearms License (FFL)** holders across the United States. This data is one facet of many in the broader culture of firearms in the US. 
 
-In short - building a set of characteristics about America that hopefully provide better insight into firearms. 
+This project doesn't aim to find the root causes of gun violence - rather, it seeks to understand broader characterstics of America and it's relationship to firearms. 
 
-The "client" I have in mind for this would be a news/media source - ideally a not-for-profit, independent organization that values deeper investigation over sensational headlines or clicks. With this data, the "client" could feasibly craft a long-term story with the backing of historical data and analysis - or dispute the findings to tell another story. 
+How do qualities of the American population look when viewed through the lens of firearms licenses? Do certain qualities conform to prevailing expectations? And are there others that might be unexpected? 
 
-To do this, data on **Federal Firearms Licenses** would be gathered from the ATF - along with **US Census data** pertaining to fields of **_education_**, **_income**_, **_industry_**, **_legislation_**, and **_population_**. What characteristics of American populations by state show tendencies toward more firearms licenses, and which towards less? After exploratory visualizations and analysis, robust regression models will be fit and regression trees will be grown - to corroborate prevailing ideas or challenge them. 
+The United States Census provides estimates on different features of state populations. It covers broader aspects such as **education**, **economics**, and **race** - to more specific ones such as **fertility rates** and **types of internet subscriptions by household**. 
 
-## What is a Federal Firearms License?
+Comparing this to data from the ATF on Federal Firearms License holders - what trends or idiosyncracies might emerge? Where are there more firearms licenses - and what are these places like? Is the country as divided as the news makes it seem? Could capitalism - rather than democracy - be a stronger factor in the availability of firearms? 
+
+Can developing features of the American population from data promote a a deeper understanding across different states, agendas, and ways of living?
+
+Some of these questions are larger than the scope of any dataset. It's my hope that by examining foundational characteristics of the American population, these 'larger' questions can be approached with a fresh or mindful perspective. 
+
+### Who is this project for?
+
+Journalism comes to mind before start-up organizations. Ideally a not-for-profit, independent organization that values long-term investigation - be it a news source, research group, or even literary magazine. Or simply a curious and engaged discussion group - keeping things transparent and adaptable takes priority. 
+
+United States Census data provides a decent foundation against which other characteristics of the population - beyond firearms - can be measured. 
+
+Given that the deliverable for this project is information - it should be free to take different forms,  provided it remain true to the data. Realistically for now - it will take on the form of this GitHub repository with data, R code, and visualizations. 
+
+### What will be analyzed, and how? 
+
+Data on **Federal Firearms Licenses** , along with **US Census data** pertaining to fields of **_education_**, **_income_**, **_industry_**, **_legislation_**, and **_population_**. 
+
+What characteristics of American populations by state show tendencies toward more firearms licenses, and which towards less? Can any tendencies observed be explained reasonably? After exploratory visualizations and analysis, robust regression models will be fit and regression trees will be grown - to corroborate prevailing ideas or challenge them. 
+
+# What is a Federal Firearms License?
 
 In the United States, a Federal Firearms License (FFL) is a requirement for those who engage in the business of firearms - generally **dealers**, **manufacturers**, and **importers**. 
 
@@ -49,4 +69,6 @@ By the 9 Types of FFLs as defined by the ATF, how have the counts changed from 1
 <sup>1</sup> Mass shootings in the United States by year, [Wikipedia](https://en.wikipedia.org/wiki/Category:Mass_shootings_in_the_United_States_by_year). Accessed March 27th, 2017. 
 
 <sup>2</sup>Tufte-style sparkline plot originally translated to R by [Lukasz Piwek](http://motioninsocial.com/tufte/).
+
+<sup>n</sup> leftover  questions: How similar or different are any of these places to where I'm writing from now? 
 
