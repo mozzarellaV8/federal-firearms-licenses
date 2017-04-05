@@ -63,20 +63,18 @@ all.features <- ffl %>%
 which(is.na(all.features))
 # [1] 227 277 327 377
 
-# 50 observations of 129 variables
+# 50 observations of 128 variables
 str(all.features)
 
 write.csv(all.features, file = "data/all-features.csv", row.names = F)
 
-
 # Regression Trees ------------------------------------------------------------
 
+# remove NAME
 rownames(all.features) <- all.features$NAME
 all.features$NAME <- NULL
 
-# all features 01 -------------------------------------------------------------
-
-# rpart - tree 01a ------------------------------------------------------------
+# rpart - tree 01a - all features ---------------------------------------------
 all.tree.a <- rpart(perCapitaFFL ~ ., data = all.features)
 
 rpart.plot(all.tree.a, 
@@ -103,7 +101,7 @@ print(all.tree.a)
 #   3) POP_UA< 616118 8  4625.6530 67.73143 *
 
 
-# tree - tree 01b -------------------------------------------------------------
+# tree - tree 01b - all features ----------------------------------------------
 all.tree.b <- tree(perCapitaFFL ~ ., data = all.features)
 
 # plot `tree` model
