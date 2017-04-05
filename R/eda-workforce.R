@@ -15,8 +15,8 @@ source("R/00-pd-themes.R")
 source("R/00-usa-map-prep.R")
 
 # total and per capita full-time employment data
-employment <- read.csv("data/04-total-data-clean/us-census-workforce.csv", stringsAsFactors = F)
-emp.pc <- read.csv("data/05-per-capita-clean/per-capita-workforce.csv", stringsAsFactors = F)
+employment <- read.csv("~/GitHub/ffl-data/04-total-data-clean/us-census-workforce.csv", stringsAsFactors = F)
+emp.pc <- read.csv("data/04-per-capita-clean/per-capita-workforce.csv", stringsAsFactors = F)
 
 str(employment)
 # 50 obs of 22 variables
@@ -79,7 +79,7 @@ ggplot(perCapitaMap, aes(lon, lat,
   labs(title = "Per Capita Workforce Population by State", 
        x = "", y = "", fill = "")
 
-# Facetted Plots --------------------------------------------------------------
+# Faceted Plots ---------------------------------------------------------------
 
 # Each industry variable, and how it relates to per capita FFL counts.
 
