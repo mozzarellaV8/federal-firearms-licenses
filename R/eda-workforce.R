@@ -58,7 +58,7 @@ ggplot(emp.pc,
 perCapitaMap <- left_join(emp.pc, fifty_states, by = "NAME") %>%
   arrange(group, order)
 
-# Map per capita workforce, per capita FFL color fill
+# Map per capita workforce, workforce population color fill
 ggplot(perCapitaMap, aes(lon, lat, 
                          group = group,
                          fill = CivilianPop.16)) +
