@@ -18,7 +18,7 @@ library(readxl)
 # Sept (09) and Oct (10) are not available
 
 # set directory to read data from
-y2016_dir <- "~/Documents/ATF-FFL/data/2016"
+y2016_dir <- "~/GitHub/federal-firearms-licenses/data/00-ATF-FFL-raw/2016"
 setwd(y2016_dir)
 
 # create a list of .xlsx files to read in
@@ -28,7 +28,6 @@ y2016_list <- list.files(path = y2016_dir, pattern = ".xlsx", recursive = T, all
 y2016 <- data.frame()
 
 # loop to read in data and bind
-
 system.time(
 for(i in 1:length(y2016_list)) {
   
@@ -53,17 +52,21 @@ for(i in 1:length(y2016_list)) {
 }
 )
 
-#    user  system elapsed 
-#  15.987   2.627  18.612 
+#     user  system elapsed 
+#   22.736   2.531  26.082 
 
+# remove temporary objects
 rm(temp)
 rm(y2016_dir)
 rm(y2016_list)
 
+str(y2016)
+# 795578 obs. of  20 variables
+
 # 2015 ------------------------------------------------------------------------
 # Sept (09) and Oct (10) are not available
 
-y2015dir <- "~/Documents/ATF-FFL/data/2015"
+y2015dir <- "~/GitHub/federal-firearms-licenses/data/00-ATF-FFL-raw/2015"
 setwd(y2015dir)
 
 y2015.list <- list.files(path = y2015dir, pattern = ".xlsx", recursive = T, all.files = T)
@@ -89,88 +92,34 @@ for(i in 1:length(y2015.list)) {
 #    user  system elapsed 
 #  16.990   2.628  19.650
 
+# remove temporary objects
 rm(temp)
-rm(y2015dir)
-rm(y2015.list)
+rm(y2015_dir)
+rm(y2015_list)
 
-# 2014 ------------------------------------------------------------------------
-# May (05) and July (07) are not available
+str(y2015)
+# 785455 obs. of  20 variables
 
-y2014dir <- "~/Documents/ATF-FFL/data/2014"
-setwd(y2014dir)
+# difference between 2016 and 2015
+nrow(y2016) - nrow(y2015)
+# 10123
 
-y2014.list <- list.files(path = y2014dir, recursive = T, all.files = T)
-y2014 <- data.frame()
-
-system.time(
-  for(i in 1:length(y2014.list)) {
-    
-    temp <- read_excel(y2014.list[i])
-    temp <- temp[-1, ]
-    temp$`Expire Date` <- ""
-    
-    temp$year <- as.factor("2014")
-    temp$month <- paste(y2014.list[i])
-    temp$month <- gsub(".xlsx", "", temp$month)
-    temp$month <- gsub(".xls", "", temp$month)
-    temp$month <- gsub("14", "", temp$month)
-    
-    y2014 <- rbind(temp, y2014)
-    
-  }
-)
-
-#    user  system elapsed 
-#  27.470   3.630  31.112
-
-rm(temp)
-rm(y2014dir)
-rm(y2014.list)
-rm(i)
-
-# 2013 ------------------------------------------------------------------------
-# Oct (10) is not available
-# April (04) appears to be corrupt. Cross checked with Google sheets
-
-y2013dir <- "~/Documents/ATF-FFL/data/2013"
-setwd(y2013dir)
-
-y2013.list <- list.files(path = y2013dir, pattern = ".xls", recursive = T, all.files = T)
-y2013 <- data.frame()
-
-system.time(
-  for(i in 1:length(y2013.list)) {
-    
-    temp <- read_excel(y2013.list[i])
-    temp <- temp[-1, ]
-    temp$`Expire Date` <- ""
-    
-    temp$year <- as.factor("2013")
-    temp$month <- paste(y2013.list[i])
-    temp$month <- gsub(".xls", "", temp$month)
-    temp$month <- gsub("13", "", temp$month)
-    
-    y2013 <- rbind(temp, y2013)
-    
-  }
-)
-
-#    user  system elapsed 
-#  34.426   4.221  38.660 
-
-rm(temp)
-rm(y2013dir)
-rm(y2013.list)
-rm(i)
 
 # bind all years --------------------------------------------------------------
 
-setwd("~/Documents/ATF-FFL")
+library(dplyr)
 
-ATF_FFL <- rbind(y2013, y2014, y2015, y2016)
+# return to main directory
+setwd("~/GitHub/federal-firearms-licenses")
 
+# bind data
+ATF_FFL <- bind_rows(y2015, y2016)
+str(ATF_FFL)
+# 1581033 obs. of  20 variables
 
-test15_16 <- rbind(y2015, y2016)
+# check binding
+nrow(y2016) + nrow(y2015)
+# 1581033
 
 # rename columns
 colnames(ATF_FFL) <- c("Region", "District", "County", "Type", "Expiration", "Seqn",
@@ -178,10 +127,8 @@ colnames(ATF_FFL) <- c("Region", "District", "County", "Type", "Expiration", "Se
                        "PremiseState", "PremiseZIP", "MailStreet", "MailCity", "MailState",
                        "MailZIP", "Phone", "ExpireDate", "year", "month")
 
-write.csv(ATF_FFL, file = "data/ATF_FFL.csv", row.names = F)
+write.csv(ATF_FFL, file = "data/ffl-2015-2016.csv", row.names = F)
 
 # each year
-write.csv(y2013, file = "data/ffl-2013.csv", row.names = F)
-write.csv(y2014, file = "data/ffl-2014.csv", row.names = F)
 write.csv(y2015, file = "data/ffl-2015.csv", row.names = F)
 write.csv(y2016, file = "data/ffl-2016.csv", row.names = F)
