@@ -16,7 +16,7 @@ source("R/00-pd-themes.R")
 source("R/00-usa-map-prep.R")
 
 # total and per capita full-time education data
-education <- read.csv("data/05-per-capita-clean/per-capita-education.csv", stringsAsFactors = F)
+education <- read.csv("data/04-per-capita-clean/per-capita-education.csv", stringsAsFactors = F)
 
 str(education)
 # 50 obs of 55 variables
