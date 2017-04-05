@@ -3,7 +3,6 @@
 library(maps)
 library(mapproj)
 library(maptools)
-library(sp)
 library(fiftystater)
 library(dplyr)
 library(ggplot2)
