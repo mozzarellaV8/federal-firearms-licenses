@@ -6,15 +6,17 @@
 - [Potential Approaches](#potential-approaches)
 - [The Data](#the-data)
 - [Notes](#notes)
-- 
+
 # The Problem
 
-Can general characteristics on the American population provide insight relating to firearms - specifically what might contribute to the number of firearms licenses in a given state? Or conversely - by examining Federal Firearms License data, can something be learned about the American population? 
+Can general characteristics on the American population provide insight relating to firearms - specifically what might contribute to the number of firearms licenses in a given state? 
+
+Or conversely - by examining Federal Firearms License data, can something be learned about the American population? 
 
 # Inversely Proportional?
-#### _**Initial Discoveries in Firearms Licenses and Populations**_
+## _**Initial Discoveries in Firearms Licenses and Populations**_
 
-Which states have the most Federal Firearms Licenses (FFLs), and which states are the most populous?
+Staring out simply: which states have the most Federal Firearms Licenses (FFLs), and which states are the most populous?
 
 ![bar-comparison-01](presentation/vis/eda-ffl-bars-V0.jpg)
 
@@ -24,11 +26,17 @@ Another quick bar chart might clear things up - with _per capita FFLs_ mapped to
 
 ![bar-ffl-fill](presentation/vis/ffl-eda-by-state-pop.jpg)
 
-While Texas has many more total FFLs than Wyoming or Montana, when adjusted per capita the FFL-to-resident ratio appears average. 
+While Texas has many more _total_ FFLs than Wyoming or Montana, when adjusted per capita the FFL-to-resident ratio appears average.
 
-_**Adjusting for 10,000 residents**_: There's just over 10 Federal Firearms Licenses for every 10,000 residents of Wyoming and Montana, compared to less than 2.5 for Texas. Futher, there is less than 1 Federal Firearms License per 10,000 for New York and California - the most populous states in the US. 
+_**Adjusting for 10,000 residents**_: 
+There's just over 10 Federal Firearms Licenses for every 10,000 residents of Wyoming and Montana, compared to less than 2.5 for Texas. Further, there is less than 1 Federal Firearms License per 10,000 for New York and California - the most populous states in the US. 
 
-![ffl-eda](vis/eda-ffl/ffl-eda-lm02.png)
+![ffl-eda](presentation/vis/ffl-eda-scatterplot-01-V2.jpg)
+
+Log transforming the population yields a trend that appears more linear, with outliers coming from the extreme low end of the FFL count. Withouth the log transform, outliers could be seen at the tails - in extremely high FFL counts or extremely high state populations.
+
+![ffl-pop - log scale](presentation/vis/ffl-eda-scatterplot-log.jpg)
+
 
 Could FFLs and Population really be inversely proportional?? Maybe not exactly so (i.e. _y = <sup>1</sup>/<sub>x</sub>_ ), but rough visual inspection seems to suggest such a trend. Put bluntly: 
 
@@ -52,7 +60,10 @@ Can looking at different characteristics of state populations show deeper relati
 
 # The Data
 
+Since population seems to have a relationship with FFLs, what attributes of each state contribute to its population? Things that come to mind are land area, urban vs. rural population.
+
 To further investigate, data was acquired from multiple sources to build a set of characteristics about the American population in relation to firearms licenses. Most relevant are data from 
+
 -  [Bureau of Alcohol, Tobacco, and Firearms (ATF)](https://www.atf.gov/firearms/listing-federal-firearms-licensees-ffls-2016)
 -  [United States Census](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/)
 -  [National Conference of State Legislators](http://www.ncsl.org/research/about-state-legislatures/partisan-composition.aspx)
