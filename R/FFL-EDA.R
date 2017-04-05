@@ -186,41 +186,55 @@ ggplot(ffl.pop, aes(LicCountMonthly, POPESTIMATE2016,
 # more populated states should naturally have more FFLs.
 # Use normalized, per capita counts to plot instead.
 
-# per 100k
-ggplot(ffl.pop, aes(perCapitaFFL, pop100k, 
+# Scatterplot: FFLs per 100k, lm + loess --------------------------------------
+
+# define inverse function
+inv <- function(x) {1000/x}
+
+# plot
+ggplot(ffl.pop, aes(pop100k,perCapitaFFL,
                     label = rownames(ffl.pop))) +
-  geom_point(aes(perCapitaFFL, pop100k), 
+  geom_point(aes(pop100k, perCapitaFFL), 
              size = 1,
              alpha = 0.75,
              data = ffl.pop) +
   geom_smooth(method = "loess", se = F, 
               linetype = "dotted", 
               color = "red3", 
-              size = 0.7) +
+              size = 0.75) +
   geom_smooth(method = "lm", se = F, 
               linetype = "dashed", 
               color = "steelblue3", 
               size = 0.5) +
-  geom_text(size = 3.5, 
+  geom_text(size = 3.75, 
             alpha = 0.95, 
-            hjust = -0.05, vjust = -0.3, 
+            hjust = -0.075, vjust = 1.1,
             check_overlap = T, 
             family = "GillSans") +
-  pd.scatter + expand_limits(x = c(0, 110)) +
+  stat_function(fun = inv, 
+                color = "coral3", 
+                alpha = 0.4,
+                size = 0.5,
+                linetype = "dotdash") +
+  pd.scatter + 
+  expand_limits(x = c(0, 420)) +
+  coord_cartesian(ylim = c(0, 120)) +
   labs(x = "Federal Firearms Licenses per 100k", 
        y = "population (hundreds of thousands)")
+
+
+# Scatterplot: FFLs per 100k, lm + loess, log scale ---------------------------
 
 # use for y-axis labels/breaks
 summary(log(ffl.pop$pop100k))
 summary(ffl.pop$perCapitaFFL)
 
-# FFL ~ Population w/log scales  
-ggplot(ffl.pop, aes(perCapitaFFL, 
-                    log(pop100k),
+ggplot(ffl.pop, aes(log(pop100k), 
+                    perCapitaFFL,
                     label = rownames(ffl.pop))) +
-  geom_point(aes(perCapitaFFL, log(pop100k)), 
+  geom_point(aes(log(pop100k), perCapitaFFL), 
              size = 1, 
-             alpha = 0.85,
+             alpha = 0.75,
              data = ffl.pop) +
   geom_smooth(method = "loess", se = F, 
               linetype = "dotted", 
@@ -231,18 +245,22 @@ ggplot(ffl.pop, aes(perCapitaFFL,
               color = "steelblue3", 
               size = 0.4) +
   geom_text(size = 3.75, 
-            alpha = 0.75, 
-            hjust = 1.025, vjust = 1, 
+            alpha = 0.85, 
+            hjust = -0.075, vjust = 1, 
             check_overlap = T, family = "GillSans") +
-  scale_x_log10(breaks = c(3.6, 19.4, 26.1, 
+  scale_y_log10(breaks = c(3.6, 19.4, 26.1, 
                            31.2, 38.2, 104.7),
                 expand = c(0.15, 0)) + 
-  scale_y_log10(breaks = c(1.767, 2.918, 3.819, 
+  scale_x_log10(breaks = c(1.767, 2.918, 3.819, 
                            3.679, 4.276, 5.973)) + 
+  expand_limits(x = c(1.767, 6.3)) +
   pd.scatter +
-  labs(title = "",
-       x = "Federal Firearms Licenses per 100k", 
-       y = "(log) population / 100k")
+  theme(axis.text.x = element_text(angle = 45, 
+                                   hjust = 1, 
+                                   vjust =1)) +
+  labs(title = "(log) State Population ~ per capita FFLs",
+       y = "Federal Firearms Licenses per 100k", 
+       x = "(log) population / 100k")
 
 # holy shit it does look inversely proportional
 
