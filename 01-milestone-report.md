@@ -14,7 +14,6 @@ Can general characteristics on the American population provide insight relating 
 Or conversely - by examining Federal Firearms License data, can something be learned about the American population? How much influence do factors such as education, income, legislation, and race have on the number of firearms licenses in a given state - if any at all? 
 
 # Inversely Proportional?
-## **Initial Discoveries with Firearms Licenses and Populations**
 
 Staring out simply: which states have the most Federal Firearms Licenses (FFLs), and which states are the most populous?
 
