@@ -110,10 +110,13 @@ While the other two variables corresponded to a negative trend with FFLs:
 - `Finance and Insurance`
 - `Waste Mangaement`
 
+### Who Needs Waste Management? 
 **Waste Management** is the key variable/workforce sector in this case, and initially showed a downward trend in regard to FFLs.  There are 10 states where there are less than 936 Waste Management workers per 100,000 residents. These states produce the largest average FFL count - nearly 61 - just about double the mean before the initial split.
 
+### Where is the Earth Mined? 
 **Mining, Oil and Gas extraction** comprises the second split - and has what appears to be a very low value for split criteria (_N_ < 24.75, far lower than the 1st quantile). This is because of the outsize presence in Mining, Oil & Gas that **_Wyoming_** and **_North Dakota_** have. 
 
+### Less Finance, More Firearms
 Away from the FFL extremes, split criteria based on
 
 - **Finance & Insurance** (_n_ >= 1368)
@@ -121,17 +124,18 @@ Away from the FFL extremes, split criteria based on
 
 determine the variation in firearms licenses amongst the more central population. Generally speaking:
 
-- larger Finance & Insurance workforce --->  **_Slightly less_** FFLs on average.
-- smaller Finance & Insurance workforce ---> **_Many more_** FFLs on average.
+- larger Finance & Insurance workforce --->  **_Slightly less_** FFLs, on average.
+- smaller Finance & Insurance workforce ---> **_Many more_** FFLs, on average.
 
 The average drops by nearly 3 when the Finance workforce is greater than 1,368 per 100,000 residents in a given state. But in states where the Finance workforce is smaller than that, the mean FFL goes up to 37.2 - increasing the average by 9.8 firearms licenses. 
 
-The effect is much more pronounced with a smaller **Finance & Insurance** workforce than with a larger one. A similar - but inverted - trend is noted with the Construction workforce. 
+The effect is much more pronounced with a smaller **Finance & Insurance** workforce than with a larger one. 
 
-Firearms Licenses and the **Construction** workforce tend to grow or shrink in number _together_:
+### Growing Together: Construction
+A similar - but inverted - trend is noted with the Construction workforce. Firearms Licenses and the **Construction** workforce tend to grow or shrink in number _together_:
 
-- smaller Construction workforce ---> **_Slightly less_** FFLs on average.
-- larger Construction workforce --->  **_Many_** more FFLs on average.
+- smaller Construction workforce ---> **_Slightly less_** FFLs, on average.
+- larger Construction workforce --->  **_Many more_** FFLs, on average.
 
 The average drops from to 24.7 to 22.1 when the Constuction industry is less than 2399 per 100k in a given state. 
 
