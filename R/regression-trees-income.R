@@ -1,4 +1,7 @@
-# Regression Trees - All Data
+# Regression Trees - Income
+# "Finanacial Characteristics"
+# US Census - American Community Survey, table S2503.
+# https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/
 # Federal Firearms License data
 
 # load data -------------------------------------------------------------------
@@ -20,10 +23,58 @@ source("~/GitHub/ATF-FFL/R/00-pd-themes.R")
 
 # read in individual CSVs
 ffl <- read.csv("data/ffl-per-capita.csv", stringsAsFactors = F)
-edu <- read.csv("data/04-per-capita-clean/per-capita-education.csv", stringsAsFactors = F)
-fin <-read.csv("data/04-per-capita-clean/per-capita-finance.csv", stringsAsFactors = F)
-leg <- read.csv("data/04-per-capita-clean/legislature-2014.csv", stringsAsFactors = F)
-race <- read.csv("data/04-per-capita-clean/per-capita-race.csv", stringsAsFactors = F)
-rural.urban <- read.csv("data/04-per-capita-clean/pct-rural-urban.csv", stringsAsFactors = F)
-wf <- read.csv("data/04-per-capita-clean/per-capita-workforce.csv", stringsAsFactors = F)
-wc <- read.csv("data/04-per-capita-clean/per-capita-working-class.csv", stringsAsFactors = F)
+income <- read.csv("data/04-per-capita-clean/per-capita-finance.csv", stringsAsFactors = F)
+str(income)
+
+# remove total occupied housing, 
+# median household income, 
+# and populations variables
+# 50 observations of 13 variables
+income <- income %>%
+  select(1, 3:13, 17)
+
+# faceted plot of FFL ~ Income Bracket ----------------------------------------
+
+# create long dataframe for facets
+income.long <- income %>%
+  gather(key = category, value = perCapitaPop, 2:12)
+
+
+income.long$category <- factor(income.long$category)
+levels(income.long$category)
+str(income.long)
+
+# facet scatter of all brackets
+income.long %>%
+  ggplot(aes(perCapitaPop, 
+             perCapitaFFL, 
+             label = NAME)) +
+  geom_smooth(method = "lm", se = F,
+              color = "red3",
+              linetype = "dashed",
+              size = 0.65) +
+  geom_point() +
+  facet_wrap(~ category, 
+             scales = "free_x",
+             ncol = 3) +
+  pd.facet +
+  theme(axis.text = element_text(size = 10.5),
+        strip.text = element_text(size = 10),
+        panel.grid.major = element_line(color = "gray98"),
+        panel.grid.minor = element_line(color = "gray96")) +
+  labs(x = "per capita population ~ annual household income",
+       y = "per capita firearms licenses")
+
+## At the extremes of poverty and wealth, FFLs appear to follow a negative trend
+# as those populations increase. FFLs show a postive, gradually growing trend moving 
+# from lower to higher income - appearing to most firmly positive around (g) and (h).
+
+# Naturally the population at extremes will not be as high as towards center.
+# Interestingly, the trend line plateaus only once, at the entry level 6-figure bracket.
+
+
+
+
+
+
+
