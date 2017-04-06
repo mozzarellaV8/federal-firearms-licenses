@@ -139,11 +139,11 @@ A similar - but inverted - trend is noted with the Construction workforce. Firea
 
 The average drops from to 24.7 to 22.1 when the Constuction industry is less than 2399 per 100k in a given state. 
 
-Conversely - the FFL average rises by 6.7 units, to 31.4, in states where Construction workers are greater 2399 per capita. The effect of being "over the threshold" in **Construction** is stronger than being under it. 
+Conversely - the FFL average rises by 6.7 units in states where Construction workers are greater than 2,399 per capita. The effect of being "over the threshold" in **Construction** is stronger than being under it. 
 
 Relative to the splits generated, most states (n = 18) fall into a grouping with mean FFL of 22.1. This corresponds to a mixture of splits amongst the 4 workforce sectors used in variable partitioning.
 
-#### the  `tree` model
+### the  `tree` model
 
 ![tree-01b](vis/eda-workforce/wf-tree-01.png)
 
@@ -151,11 +151,11 @@ A regression tree grown using `tree` corroborates the importance of the **Waste 
 
 Given the high mean value of 81 FFLs in the split at **Other Services**, it might be safe to assume that Wyoming, Montana, and/or Alaska have low **Waste Management** per capita coupled with a higher **Other Services** population per capita. 
 
-## split variables - how do they look? 
+## Split Criteria Visualized
 
 ![rpart-01 splits](vis/eda-workforce/wf-rpart-01-12-splits.png)
 
-Wyoming appears to be exerting an undue influence on this split with its Mining, Oil & Gas industry population - more than twice that of North Dakota, the next state in rank. The split drawn at Mining, Oil & Gas (24.75) is well below the 1st quantile, median, and mean values for that distribution.
+Wyoming appears to be exerting an undue influence on this split with its **Mining, Oil & Gas** population - more than twice that of North Dakota, the next state in rank. The split drawn at Mining, Oil & Gas (24.75) is well below the _1st quantile, median, and mean values_ for that distribution.
 
 ```{R}
 summary(wf$Mining.Oil.Gas)
@@ -210,7 +210,7 @@ rr01.coef <- augment(wf.rr01) %>%
 
 ![robust-regression-01-fitted-vs-obs](vis/eda-workforce/wf-fitted-vs-obs-resid.png)
 
-Interestingly - the Huber method used in the robust regression didn't alter weighting for Wyoming, which had the largest **Mining, Oil & Gas** workforce across the US by a large margin. Montana, Alaska, and Idaho were heavily penalized in this model. Why is this? 
+Interestingly - the Huber method used in the robust regression didn't alter weighting for Wyoming, which had the largest **Mining, Oil & Gas** workforce across the US by a large margin. **Montana**, **Alaska**, and **Idaho** were heavily penalized by this model. Why is this<sup>[1](#appendix)</sup>? 
 
 # Robust Model 02
 
@@ -221,7 +221,6 @@ A second robust regression was fit - using all variables save Civilian Populatio
 Wyoming continues to be passed on for weights. Interesting to note that the robust regression will bring outlier FFL counts down below 50 - the only two states exempt from this are North Dakota and Wyoming.
 
 ![wf-fitted-vs-obs-diff-rr03.png](vis/eda-workforce/wf-fitted-vs-obs-diff-rr03.png)
-
 
 # Appendix
 
@@ -265,6 +264,7 @@ glance(wf.m01b) %>% select(r.squared, adj.r.squared, p.value)
   r.squared adj.r.squared      p.value
 1 0.6037577     0.5868963 3.565169e-10
 ```
+![appendix-lm02](vis/eda-workforce/appendix-lm02-diagnostics.png)
 
 And all 4 split variables:
 
@@ -283,6 +283,45 @@ glance(wf.m01c) %>% select(r.squared, adj.r.squared, p.value)
   r.squared adj.r.squared      p.value
 1 0.6783839     0.6497957 1.337578e-10
 ```
+
+Using an intuitive combination of variables, based off of study of exploratory scatterplots in a shameless attempt to improve adjusted r-squared: 
+
+```{R}
+wf.m01d <- lm(perCapitaFFL ~ Waste.Management + Mining.Oil.Gas + 
+                Finance.Insurance + Hunting.Fishing.Agriculture + Manufacturing, data = wf)
+                
+tidy(wf.m01d) %>% arrange(p.value)
+                         term     estimate    std.error statistic      p.value
+1                 (Intercept) 67.170936464 14.281593032  4.703322 2.551646e-05
+2 Hunting.Fishing.Agriculture  0.014907841  0.003312075  4.501058 4.910752e-05
+3            Waste.Management -0.025958427  0.008106679 -3.202104 2.535649e-03
+4              Mining.Oil.Gas  0.009433487  0.003096187  3.046808 3.901255e-03
+5           Finance.Insurance -0.006400783  0.003220379 -1.987587 5.310321e-02
+6               Manufacturing -0.001615666  0.001199039 -1.347467 1.847279e-01
+
+glance(wf.m01d) %>% select(r.squared, adj.r.squared, p.value)
+  r.squared adj.r.squared     p.value
+1 0.7491547     0.7206495 3.42114e-12
+```
+
+Postive, negative, positive, negative, random - FFL trends observed from exploratory scatterplots of the 5 variables in the intuitive model `wf.m01d`.
+
+### Linear Model Comparison
+
+```{R}
+compare.lm <- bind_rows(lm01, lm02, lm03, lm04) %>%
+  arrange(p.value)
+  
+compare.lm
+  r.squared adj.r.squared      p.value model
+1 0.7491547     0.7206495 3.421140e-12  lm04
+2 0.6783839     0.6497957 1.337578e-10  lm03
+3 0.6037577     0.5868963 3.565169e-10  lm02
+4 0.8654893     0.7727233 7.218867e-08  lm01  
+```
+
+Model `wf.m01d` or `lm04` is the strongest of the group using the standard metrics of adjusted r-squared and p.value.
+
 
 ## Modeling Split Interactions
 
