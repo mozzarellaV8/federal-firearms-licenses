@@ -145,7 +145,7 @@ For context, what _kind_ of FFLs are there? And what are the trends by type over
 - _"National Population Totals Datasets: 2010-2016"_, [US Census](https://www.census.gov/data/datasets/2016/demo/popest/nation-total.html)
 - _"2010 Census Urban and Rural Classification and Urban Area Criteria"_, [US Census](https://www.census.gov/geo/reference/ua/urban-rural-2010.html)
 - _"Educational Attainment"_, [US Census - American Community Survery](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/), table S1501.
-- _"Finanacial Characteristics"_, [US Census - American Community Survery](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/)table S2503.
+- _"Finanacial Characteristics"_, [US Census - American Community Survery](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/) table S2503.
 - _"Industry by Class of Worker for the Civilian Employed Population 16 Years and Over"_, [US Census - American Community Survery](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/), table S2407.
 - _"Legislator Data - State Partisan Composition"_, [NCSL](http://www.ncsl.org/research/about-state-legislatures/partisan-composition.aspx), [2014 data](http://www.ncsl.org/documents/statevote/legiscontrol_2014.pdf)
 
