@@ -46,10 +46,45 @@ wf.m01c <- lm(perCapitaFFL ~ Waste.Management + Mining.Oil.Gas +
 tidy(wf.m01c) %>% arrange(p.value)
 glance(wf.m01c) %>% select(r.squared, adj.r.squared, p.value)
 
+# intuitive choice of variables
+# to get a better adjusted r-squared 
+# without over-saturating the model
+wf.m01d <- lm(perCapitaFFL ~ Waste.Management + Mining.Oil.Gas + 
+                Finance.Insurance + Hunting.Fishing.Agriculture + Manufacturing, data = wf)
+tidy(wf.m01d) %>% arrange(p.value)
+glance(wf.m01d) %>% select(r.squared, adj.r.squared, p.value)
+
 par(mfrow = c(2, 2), family = "GillSans")
 plot(wf.m01)
 plot(wf.m01b)
 plot(wf.m01c)
+plot(wf.m01d)
+
+# Compare Linear Models -------------------------------------------------------
+
+# lm01
+lm01 <- glance(wf.m01) %>% 
+  dplyr::select(r.squared, adj.r.squared, p.value) %>%
+  mutate(model = "lm01")
+
+# lm02
+lm02 <- glance(wf.m01b) %>% 
+  dplyr::select(r.squared, adj.r.squared, p.value) %>%
+  mutate(model = "lm02")
+
+# lm03
+lm03 <- glance(wf.m01c) %>% 
+  dplyr::select(r.squared, adj.r.squared, p.value) %>%
+  mutate(model = "lm03")
+
+# lm04
+lm04 <- glance(wf.m01d) %>% 
+  dplyr::select(r.squared, adj.r.squared, p.value) %>%
+  mutate(model = "lm04")
+
+compare.lm <- bind_rows(lm01, lm02, lm03, lm04) %>%
+  arrange(p.value)
+
 
 # Modeling Split Interactions -------------------------------------------------
 
@@ -60,6 +95,7 @@ mine01 <- factor(wf$Mining.Oil.Gas < 24.75)
 # model interaction 01
 wf.m02 <- lm(perCapitaFFL ~ waste01 * mine01, data = wf)
 summary(wf.m02)
+
 tidy(wf.m02) %>% arrange(p.value)
 glance(wf.m02) %>% select(r.squared, adj.r.squared, p.value)
 
@@ -72,4 +108,3 @@ wf.m02b <- lm(perCapitaFFL ~ waste01 * mine01 * fin01 * con01, data = wf)
 summary(wf.m02b)
 tidy(wf.m02b) %>% arrange(p.value)
 glance(wf.m02b) %>% select(r.squared, adj.r.squared, p.value)
-
