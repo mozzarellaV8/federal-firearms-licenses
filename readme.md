@@ -8,19 +8,15 @@
 
 ### What is this project trying to do?
 
-The **ATF** publishes data monthly on all **Federal Firearms License (FFL)** holders across the United States. This data is one facet of many in the broader culture of firearms in the US. 
-
-This project doesn't aim to find the root causes of gun violence - rather, it seeks to understand broader characterstics of America and it's relationship to firearms. 
+The **ATF** publishes data monthly on all **Federal Firearms License (FFL)** holders across the United States. This data is one aspect of many in the broader culture of firearms in the US. This project doesn't aim to find the root causes of gun violence - rather, it seeks to understand broader characterstics of America and it's relationship to firearms.
 
 How do qualities of the American population look when viewed through the lens of firearms licenses? Do certain qualities conform to prevailing expectations? And are there others that might be unexpected? 
 
 The United States Census provides estimates on different features of state populations. It covers broader aspects such as **education**, **economics**, and **race** - to more specific ones such as **fertility rates** and **types of internet subscriptions by household**. 
 
-Comparing this to data from the ATF on Federal Firearms License holders - what trends or idiosyncracies might emerge? Where are there more firearms licenses - and what are these places like? Is the country as divided as the news makes it seem? Could capitalism - rather than democracy - be a stronger factor in the availability of firearms? 
+Comparing this to data from the ATF on Federal Firearms License holders - what trends or outliers might emerge? Where are there more firearms licenses; where are there less?  And what are these places like? Is the country as divided as some media make it seem? Could capitalism - rather than legislation, or culture - be a stronger factor in the availability of firearms? 
 
 Can developing features of the American population from data promote a a deeper understanding across different states, agendas, and ways of living?
-
-Some of these questions are larger than the scope of any dataset. It's my hope that by examining foundational characteristics of the American population, these 'larger' questions can be approached with a fresh or mindful perspective. 
 
 # What is a Federal Firearms License?
 
