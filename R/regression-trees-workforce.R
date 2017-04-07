@@ -74,11 +74,13 @@ ggplot(wf, aes(Waste.Management,
                Mining.Oil.Gas,
                label = NAME, 
                size = perCapitaFFL)) +
-  geom_segment(x = 936, xend = 936, y = -100, yend = 5000,
+  geom_segment(x = 936, xend = 936, 
+               y = -100, yend = 5000,
                linetype = "dashed", 
                color = "red3", 
                size = 0.25) +
-  geom_segment(x = 936, xend = 2200, y = 24.75, yend = 24.75, 
+  geom_segment(x = 936, xend = 2200, 
+               y = 24.75, yend = 24.75, 
                linetype = "dashed", 
                color = "red3", 
                size = 0.25) +
@@ -106,8 +108,7 @@ ggplot(wf, aes(Waste.Management,
         legend.title = element_text(size = 10),
         panel.grid = element_blank()) +
   labs(title = "FFLs ~ Workforce Sector - Primary & Secondary Regression Tree Splits",
-       x = "Waste Management", 
-       y = "Mining, Oil and Gas Extraction",
+       x = "Waste Management", y = "Mining, Oil and Gas Extraction",
        color = "per capita FFLs")
 
 # Wyoming appears to be exerting significant influence due to what appears to be 
@@ -136,11 +137,13 @@ ggplot(wf, aes(Finance.Insurance,
                Construction,
                label = NAME, 
                size = perCapitaFFL)) +
-  geom_segment(x = 1368, xend = 1368, y = -1000, yend = 5000,
+  geom_segment(x = 1368, xend = 1368, 
+               y = -1000, yend = 5000,
                linetype = "dashed", 
                color = "red3", 
                size = 0.25) +
-  geom_segment(x = 1368, xend = 4000, y = 2399, yend = 2399, 
+  geom_segment(x = 1368, xend = 4000, 
+               y = 2399, yend = 2399, 
                linetype = "dashed", 
                color = "red3", 
                size = 0.25) +
@@ -168,8 +171,7 @@ ggplot(wf, aes(Finance.Insurance,
         legend.title = element_text(size = 10),
         panel.grid = element_blank()) +
   labs(title = "FFLs ~ Workforce Sector - 3rd & 4th Regression Tree Splits",
-       x = "Finance & Insurance", 
-       y = "Construction",
+       x = "Finance & Insurance", y = "Construction",
        color = "per capita FFLs")
 
 # Robust Regression Model 01  -------------------------------------------------
@@ -196,28 +198,15 @@ rr01.coef <- augment(wf.rr01) %>%
          weighted.fit = .fitted * weight) %>%
   arrange(weight)
 
-# RR: plot fitted values with regression line, fill mapped to fit value -------
-ggplot(rr01.coef, aes(Waste.Management, 
-                      weighted.fit,
-                      label = .rownames)) + 
-  geom_point(color = "firebrick3", shape = 17, size = 3.25, 
-             alpha = 0.8, data = rr01.coef) +
-  geom_point(aes(Waste.Management, perCapitaFFL), 
-             shape = 20, 
-             size = 2) +
-  geom_text(aes(Waste.Management, weighted.fit), 
-            size = 3, hjust = -0.1, vjust = -0.15, 
-            check_overlap = T, family = "GillSans") +
-  geom_errorbar(aes(x = Waste.Management, 
-                    ymin = weighted.fit, 
-                    ymax = perCapitaFFL), 
-                linetype = "dotted") +
-  expand_limits(x = c(600, 1900)) +
-  labs(x = "per capita Waste Management") +
-  pd.classic
-
 # RR: plot fitted vs observed, arranged by residual size ----------------------
 
+# distribution of absolute residuals
+summary(abs(rr01.coef$resid))
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#  0.3238  3.4150  6.4290  9.1590 12.0500 38.4200 
+
+# geom_segment is colored with perCapitaFFL
+# switch to black when serious
 ggplot(rr01.coef, aes(reorder(.rownames, abs(resid)),
                       weighted.fit)) + 
   geom_point(color = "firebrick3", 
@@ -226,17 +215,29 @@ ggplot(rr01.coef, aes(reorder(.rownames, abs(resid)),
              data = rr01.coef) +
   geom_point(aes(.rownames, perCapitaFFL),
              shape = 1, 
-             size = 4) +
+             size = 4,
+             color = "black") +
   geom_errorbar(aes(ymin = weighted.fit, 
-                    ymax = perCapitaFFL), 
+                    ymax = perCapitaFFL,
+                    color = abs(resid)), 
                 linetype = "solid",
-                size = 0.5) +
-  coord_flip() +
-  pd.theme +
+                size = 0.55,
+                data = rr01.coef) +
+  scale_color_gradient2(low = "deepskyblue4",
+                        mid = "antiquewhite2",
+                        high = "firebrick2",
+                        midpoint = 19.2) +
+  coord_flip() + pd.theme +
   theme(panel.grid.major = element_line(color = "gray94"),
-        axis.text = element_text(size = 12)) +
-  labs(x = "", y = "",
-       title = "FFLs ~ Industry: Weighted Fit vs Observed Values\narranged by absolute residual values")
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 8),
+        legend.position = "right",
+        legend.box = "horizontal",
+        legend.title.align = 1,
+        legend.key.size = unit(0.35, "cm"),
+        legend.title = element_text(hjust = -1, vjust = -1)) +
+  labs(x = "", y = "", color = "",
+       title = "FFLs ~ Industry: Weighted Fit vs Observed Values, ordered by Absolute Residuals")
 
 # RR: plot fitted vs observed, arranged by difference -------------------------
 
@@ -255,7 +256,7 @@ ggplot(rr01.coef, aes(reorder(.rownames, fo.diff),
              size = 4) +
   geom_errorbar(aes(ymin = weighted.fit, 
                     ymax = perCapitaFFL), 
-                linetype = "dotted",
+                linetype = "solid",
                 size = 1) +
   labs(x = "", y = "",
        title = "FFLs ~ Industry: Weighted Fit vs Observed Values\narranged by difference in values") +
@@ -287,10 +288,10 @@ rr01.coef %>%
   scale_y_continuous(breaks = c(0.33, 0.40, 0.46, 0.68, 0.72, 
                                 0.77, 0.83, 0.93, 0.98)) +
   pd.theme + 
-  theme(axis.text = element_text(size = 12),
+  theme(axis.title = element_text(size = 12.5),
+        axis.text = element_text(size = 12),
         axis.text.x = element_text(angle = 45, size = 12,
-                                   hjust = 1, vjust = 1),
-        axis.title = element_text(size = 12.5)) +
+                                   hjust = 1, vjust = 1)) +
   labs(x = "", y = "assigned weight",
        title = "Federal Firearms Licenses by Industry - Tree Split Variables\nRobust Regression Weights on Outlier States")
 
