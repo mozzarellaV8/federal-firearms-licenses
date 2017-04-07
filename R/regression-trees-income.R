@@ -33,7 +33,7 @@ str(income)
 income <- income %>%
   select(1, 3:13, 17)
 
-# faceted plot of FFL ~ Income Bracket ----------------------------------------
+# Faceted plot of FFL ~ Income Bracket ----------------------------------------
 
 # create long dataframe for facets
 income.long <- income %>%
@@ -71,6 +71,99 @@ income.long %>%
 
 # Naturally the population at extremes will not be as high as towards center.
 # Interestingly, the trend line plateaus only once, at the entry level 6-figure bracket.
+
+# Facets - Extremes -----------------------------------------------------------
+
+# Poverty and Wealth
+income.long %>%
+  filter(category == "a.LessThan5000" | category == "k.150000.or.more") %>%
+  ggplot(aes(perCapitaPop, 
+             perCapitaFFL, 
+             label = NAME)) +
+  geom_smooth(method = "lm", se = F,
+              color = "red3",
+              linetype = "dashed",
+              size = 0.65) +
+  geom_point(size = 0.75) +
+  geom_text(aes(perCapitaPop,
+                perCapitaFFL,
+                label = NAME),
+            hjust = -0.07, vjust = 1,
+            size = 2.75, 
+            check_overlap = T) +
+  facet_wrap(~ category, 
+             scales = "free_x", 
+             ncol = 1) +
+  expand_limits(x = c(0, 7400), y = 0) +
+  pd.facet +
+  theme(axis.text = element_text(size = 10.5),
+        strip.text = element_text(size = 11),
+        panel.grid.major = element_line(color = "gray94"),
+        panel.grid.minor = element_line(color = "gray94")) +
+  labs(x = "per capita population ~ annual household income",
+       y = "per capita firearms licenses")
+
+# Facets - Nulls --------------------------------------------------------------
+
+# Poverty and Wealth
+income.long %>%
+  filter(category == "b.5000to9999" | category == "j.100000to149999") %>%
+  ggplot(aes(perCapitaPop, 
+             perCapitaFFL, 
+             label = NAME)) +
+  geom_smooth(method = "lm", se = F,
+              color = "red3",
+              linetype = "dashed",
+              size = 0.5) +
+  geom_point(size = 0.75) +
+  geom_text(aes(perCapitaPop,
+                perCapitaFFL,
+                label = NAME),
+            hjust = -0.06, vjust = 1,
+            size = 3, 
+            check_overlap = T) +
+  facet_wrap(~ category, 
+             scales = "free_x", 
+             ncol = 1) +
+  pd.facet +
+  theme(axis.text = element_text(size = 10.5),
+        strip.text = element_text(size = 11),
+        panel.grid.major = element_line(color = "gray94"),
+        panel.grid.minor = element_line(color = "gray94")) +
+  labs(x = "per capita population ~ annual household income",
+       y = "per capita firearms licenses")
+
+# Outliers Wyoming and Alaska: low per capita poverty, high per capita wealth.
+
+# Facets - Trending Up --------------------------------------------------------
+
+# Poverty and Wealth
+income.long %>%
+  filter(category == "d." | category == "j.100000to149999") %>%
+  ggplot(aes(perCapitaPop, 
+             perCapitaFFL, 
+             label = NAME)) +
+  geom_smooth(method = "lm", se = F,
+              color = "red3",
+              linetype = "dashed",
+              size = 0.5) +
+  geom_point(size = 0.75) +
+  geom_text(aes(perCapitaPop,
+                perCapitaFFL,
+                label = NAME),
+            hjust = -0.06, vjust = 1,
+            size = 3, 
+            check_overlap = T) +
+  facet_wrap(~ category, 
+             scales = "free_x", 
+             ncol = 1) +
+  pd.facet +
+  theme(axis.text = element_text(size = 10.5),
+        strip.text = element_text(size = 11),
+        panel.grid.major = element_line(color = "gray94"),
+        panel.grid.minor = element_line(color = "gray94")) +
+  labs(x = "per capita population ~ annual household income",
+       y = "per capita firearms licenses")
 
 
 
