@@ -137,12 +137,14 @@ income.long %>%
 
 # Facets - Trending Up --------------------------------------------------------
 
-# Poverty and Wealth
+levels(income.long$category)
+
+# Trending Up - Middle Class
 income.long %>%
-  filter(category == "d." | category == "j.100000to149999") %>%
-  ggplot(aes(perCapitaPop, 
-             perCapitaFFL, 
-             label = NAME)) +
+  filter(category == "d.15000to19999" | category == "e.20000to24999" 
+         | category == "f.25000to34999" | category == "g.35000to49999" 
+         | category ==  "h.50000to74999" | category == "i.75000to99999") %>%
+  ggplot(aes(perCapitaPop, perCapitaFFL, label = NAME)) +
   geom_smooth(method = "lm", se = F,
               color = "red3",
               linetype = "dashed",
@@ -152,7 +154,36 @@ income.long %>%
                 perCapitaFFL,
                 label = NAME),
             hjust = -0.06, vjust = 1,
-            size = 3, 
+            size = 2.5, 
+            check_overlap = T) +
+  facet_wrap(~ category, 
+             scales = "free_x", 
+             ncol = 2) +
+  pd.facet +
+  theme(axis.text = element_text(size = 10.5),
+        strip.text = element_text(size = 11),
+        panel.grid.major = element_line(color = "gray94"),
+        panel.grid.minor = element_line(color = "gray94")) +
+  labs(x = "per capita population ~ annual household income",
+       y = "per capita firearms licenses",
+       title = "positive FFL trends across annual income categories")
+
+
+# Facets - Trending Up --------------------------------------------------------
+
+income.long %>%
+  filter(category == "g.35000to49999" | category ==  "h.50000to74999") %>%
+  ggplot(aes(perCapitaPop, perCapitaFFL, label = NAME)) +
+  geom_smooth(method = "lm", se = F,
+              color = "red3",
+              linetype = "dashed",
+              size = 0.5) +
+  geom_point(size = 0.75) +
+  geom_text(aes(perCapitaPop,
+                perCapitaFFL,
+                label = NAME),
+            hjust = -0.06, vjust = 1,
+            size = 2.95, 
             check_overlap = T) +
   facet_wrap(~ category, 
              scales = "free_x", 
@@ -163,11 +194,6 @@ income.long %>%
         panel.grid.major = element_line(color = "gray94"),
         panel.grid.minor = element_line(color = "gray94")) +
   labs(x = "per capita population ~ annual household income",
-       y = "per capita firearms licenses")
-
-
-
-
-
-
+       y = "per capita firearms licenses",
+       title = "positive FFL trends across annual income categories")
 
