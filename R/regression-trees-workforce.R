@@ -221,11 +221,11 @@ ggplot(rr01.coef, aes(reorder(.rownames, abs(resid)),
                     ymax = perCapitaFFL,
                     color = abs(resid)), 
                 linetype = "solid",
-                size = 0.55,
+                size = 0.65,
                 data = rr01.coef) +
-  scale_color_gradient2(low = "deepskyblue4",
+  scale_color_gradient2(low = "black",
                         mid = "antiquewhite2",
-                        high = "firebrick2",
+                        high = "firebrick",
                         midpoint = 19.2) +
   coord_flip() + pd.theme +
   theme(panel.grid.major = element_line(color = "gray94"),
@@ -238,30 +238,6 @@ ggplot(rr01.coef, aes(reorder(.rownames, abs(resid)),
         legend.title = element_text(hjust = -1, vjust = -1)) +
   labs(x = "", y = "", color = "",
        title = "FFLs ~ Industry: Weighted Fit vs Observed Values, ordered by Absolute Residuals")
-
-# RR: plot fitted vs observed, arranged by difference -------------------------
-
-rr01.coef <- rr01.coef %>%
-  mutate(fo.diff = abs(perCapitaFFL - weighted.fit)) %>%
-  arrange(fo.diff)
-
-ggplot(rr01.coef, aes(reorder(.rownames, fo.diff),
-                      weighted.fit)) + 
-  geom_point(color = "firebrick3", 
-             shape = 17, 
-             size = 4, 
-             data = rr01.coef) +
-  geom_point(aes(.rownames, perCapitaFFL),
-             shape = 1, 
-             size = 4) +
-  geom_errorbar(aes(ymin = weighted.fit, 
-                    ymax = perCapitaFFL), 
-                linetype = "solid",
-                size = 1) +
-  labs(x = "", y = "",
-       title = "FFLs ~ Industry: Weighted Fit vs Observed Values\narranged by difference in values") +
-  coord_flip() +
-  pd.theme
 
 # RR: plot assigned weights ---------------------------------------------------
 
@@ -410,54 +386,4 @@ ggplot(rr03.coef, aes(reorder(.rownames, abs(resid)),
         axis.text = element_text(size = 12)) +
   labs(x = "", y = "",
        title = "FFLs ~ Industry: Weighted Fit vs Observed Values, all variables\narranged by absolute residual values")
-
-# rr03: plot fitted vs observed, arranged by residual size ----------------------
-
-ggplot(rr03.coef, aes(reorder(.rownames, abs(resid)),
-                      weighted.fit)) + 
-  geom_point(color = "firebrick3", 
-             shape = 17, 
-             size = 4, 
-             data = rr03.coef) +
-  geom_point(aes(.rownames, perCapitaFFL),
-             shape = 1, 
-             size = 4) +
-  geom_errorbar(aes(ymin = weighted.fit, 
-                    ymax = perCapitaFFL), 
-                linetype = "solid",
-                size = 0.5) +
-  coord_flip() +
-  pd.theme +
-  theme(panel.grid.major = element_line(color = "gray94"),
-        axis.text = element_text(size = 12)) +
-  labs(x = "", y = "",
-       title = "FFLs ~ Industry: Weighted Fit vs Observed Values\narranged by absolute residual values")
-
-
-# calculate absolute difference between weighted fit and observed 
-rr03.coef <- rr03.coef %>%
-  mutate(fo.diff = abs(perCapitaFFL - weighted.fit)) %>%
-  arrange(fo.diff)
-
-ggplot(rr03.coef, aes(reorder(.rownames, fo.diff),
-                      weighted.fit)) + 
-  geom_point(color = "firebrick3", 
-             shape = 17, 
-             size = 4, 
-             data = rr03.coef) +
-  geom_point(aes(.rownames, perCapitaFFL),
-             shape = 1, 
-             size = 4) +
-  geom_errorbar(aes(ymin = weighted.fit, 
-                    ymax = perCapitaFFL), 
-                linetype = "solid",
-                size = 0.5) +
-  labs(x = "", y = "",
-       title = "FFLs ~ Industry: Weighted Fit vs Observed Values - All Variables\narranged by difference in values (rr03)") +
-  coord_flip() +
-  pd.theme + 
-  theme(panel.grid.major = element_line(color = "gray94"),
-        panel.grid.minor = element_line(color = "gray94"),
-        axis.text = element_text(size = 12))
-
 
