@@ -1,5 +1,17 @@
 # Financial Characteristics
 
+How does annual household income relate - if at all - to Federal Firearms License counts? Are there any trends among different income groups? Does more money lead to less firearms licenses? Does less money lead to more? 
+
+- [Annual Household Incomes](#annual-household-incomes)
+- [Trending Directions](#trending-directions)
+- [Extremes of Poverty and Wealth](#extremes-of-poverty-and-wealth)
+- [Upward Trends Toward Center](#upward-trends-toward-center)
+- [Seemingly No Effect](#seemingly-no-effect)
+- [Regression Trees](#regression-trees-on-income)
+- [Income Outliers](#income-outliers)
+- [Potential Future Directions](#potential-future-directions)
+
+# Annual Household Incomes
 "Financial Characteristics" data from the United States Census comprises population totals categorized into 11 brackets based on annual household income. 
 
 There are five stratifications at or beneath the Census-defined poverty threshold of $24,257 in annual income for a household of four<sup>[1](#notes)</sup>. The remaining categories can be argued as middle-class, with the highest reported income bracket at $150,000 and over. 
@@ -20,8 +32,6 @@ The categories as defined by the census:
 
 # Trending Directions
 
-#### Overview
-
 A quick faceted scatterplot with `geom_smooth` for a _general_ sense of any potential trends relating firearms licenses and annual income. 
 
 ![facet-FFL-01](vis/eda-finance/facet-FFL-01.png)
@@ -30,11 +40,13 @@ A quick faceted scatterplot with `geom_smooth` for a _general_ sense of any pote
 - Each other bracket shows upward trending with firearms licenses - with the trend appearing most firm towards the central income brackets (**$35,000-49,999** and **$50,000-$74,999**). Outwards in either direction from this 'center' the positive slope becomes questionably weak, until reversing at the extremes.
 - At just above six-figures annually, there appears to be zero relationship  - zero slope.
  
-#### Extremes of Poverty and Wealth
+# Extremes of Poverty and Wealth
 
-At the two extremes of the income categories, a downward trend with FFLs is observed. A thought that comes to mind is, more of those in poverty will be where there are more people - urbanized areas. It's been observed in Rural-Urban proportions data that urbanized areas and clusters have a tendency towards less firearms licenses.
+At the two extremes of the income categories, a downward trend with FFLs is observed. A thought that comes to mind is, more of those in poverty will be where there are more people - urbanized areas. It's been observed in Rural-Urban proportions data that Urbanized Areas have a tendency towards less firearms licenses.
 
 Is it possible that income in these cases is approximately normally distibuted, making it so population rather income is what's driving the FFL trend?
+
+As usual, the three high FFL outliers **Alaska**,** Montana**, and **Wyoming** stand out. 
 
 ![facet-extremes-01](vis/eda-finance/facet-extremes-02.png)
 
@@ -42,7 +54,13 @@ Is it possible that income in these cases is approximately normally distibuted, 
 
 ![map - under 5k](vis/eda-finance/map-5k-discrete.jpg)
 
-#### Upward Trends Towards the Center
+# Upward Trends Towards Center
+
+![50to75k map](vis/eda-finance/map-50to75k-discrete.jpg)
+
+Heartland, Middle America, Midwest, Flyover Country, Bible Belt, Rust Belt, Red States, Swing States
+
+![35to50k map](vis/eda-finance/map-35to50k-discrete.jpg)
 
 Generally it appeared that towards the approximate _center_ income categories, there would be an upward trend in FFLs. 
 
@@ -50,19 +68,15 @@ Generally it appeared that towards the approximate _center_ income categories, t
 
 Rough visual inspection of the scatterplots suggests that the strongest trends might be in the $35-$50k and $50-75k annual income brackets.
 
-![50to75k map](vis/eda-finance/map-50to75k-discrete.jpg)
+# Seemingly No Effect
 
-![35to50k map](vis/eda-finance/map-35to50k-discrete.jpg)
-
-#### No Trend Observed
-
-At incomes of $5,000-$9,999 and $100,000-$149,000 annually, there appears to be no relationship between income and FFLs.
+At incomes of $5,000-$9,999 and $100,000-$149,000 annually, there appears to be no relationship between income and FFLs. The degree of scatter in the $100,00-$149,999 category is quite high. 
 
 ![null brackets](vis/eda-finance/facet-null-01.png)
 
-# Regression Trees on Income
+# Regression Trees
 
-## `rpart` tree 01
+## first `rpart` tree 
 
 ![rpart-model-01](vis/eda-finance/rpart-model-01.png)
 
@@ -70,11 +84,13 @@ There's significant different in variable choices and splits between the `rpart`
 
 ![rpart-01-scatter-splits](vis/eda-finance/rpart-01-scatter-splits-1-2.png)
 
+<img src="vis/eda-finance/rpart-01-scatter-splits-1-2.png" alt="rpart-01-scatter-splits" width="1200">
+
 How were the split criterion variables for the `rpart` model distributed? 
 
-![dist-rpart-splits](vis/eda-finance/dist-rpart-splits.png)
+<img src="vis/eda-finance/dist-rpart-splits.png" alt="dist-rpart-splits" width="480">
 
-## `tree` tree 01
+## first`tree` tree
 
 Interestingly, the tree grown with `tree` decides initially using an annual income of less than $5,000 - if per capita this population is less than 860 - the more FFLs there are on average. Could this mean that lower rates of poverty in a given state associate with higher per capita FFLs? 
 
@@ -130,7 +146,7 @@ Weighted Fit Values vs. Observed, weighted fit in red.
 
 Montana, Alaska, South Dakota, and Wyoming are heavily penalized by the robust regression model. 
 
-# Potential Future Cross Data
+# Potential Future Directions
 
 - Bureau of Labor Statistics
 
