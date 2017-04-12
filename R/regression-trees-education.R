@@ -8,8 +8,10 @@
 
 library(dplyr)
 library(tidyr)
+library(broom)
 library(ggplot2)
 library(grDevices)
+
 
 # custom plot themes
 source("R/00-pd-themes.R")
@@ -20,11 +22,9 @@ education <- read.csv("data/04-per-capita-clean/per-capita-education.csv", strin
 
 str(education)
 # 50 obs of 55 variables
-summary(education)
 
 # select only variables that pertain to HS and BA
 # the only data that is complete across age groups
-
 edu <- education %>%
   select(NAME, perCapitaFFL, POPESTIMATE2015, POPESTIMATE2016,
          contains("HS"), contains("BA"), -contains("Less"))
@@ -35,7 +35,7 @@ str(edu)
 # clean up variable names
 colnames(edu) <- gsub("edu.[0-9][0-9].Total", "per.capita", colnames(edu))
 
-# Regression Tree -------------------------------------------------------------
+# Regression Trees ------------------------------------------------------------
 
 # Data inspection using regression trees.
 # Because of the large number of variables, 
@@ -113,7 +113,7 @@ text(edu.tree01, pretty = 0, use.n = T, cex = 0.85)
 edu.tree.all <- edu.tree %>%
   select(-contains("Male"), -contains("Female"))
 
-# exploratory plot
+# exploratory plot - distribution by education and age bracket
 edu.tree.all %>%
   select(perCapitaFFL, 2:11) %>%
   gather(key = age.bracket, value = per.capita.total, 2:11) %>%
@@ -127,13 +127,12 @@ edu.tree.all %>%
   pd.facet +
   labs(x = "graduates per 100k", y = "FFLs per 100k")
 
-ggplot(edu.tree.all, aes())
 
 # `rpart` model 02 ------------------------------------------------------------
 edu.rpart02 <- rpart(perCapitaFFL ~ ., data = edu.tree.all)
 
 rpart.plot(edu.rpart02, 
-           type = 1, extra = 1, digits = 4, cex = 1, 
+           type = 1, extra = 1, digits = 4, cex = 0.8, 
            branch.lty = 1, branch.lwd = 1.25,
            split.cex = 1.1, nn.cex = 0.9,
            box.palette = "BuBn", 
@@ -142,7 +141,7 @@ rpart.plot(edu.rpart02,
            family = "GillSans")
 
 print(edu.rpart02)
-# n= 50 
+# n = 50 
 
 # node), split, n, deviance, yval
 # * denotes terminal node
@@ -156,10 +155,18 @@ print(edu.rpart02)
 #   3) per.capita.18to24.BA< 716.5771 9  7855.201 58.24696 *
 
 summary(edu.rpart02)
+# Variable importance
+# per.capita.18to24.BA per.capita.25to34.BA per.capita.35to44.BA per.capita.45to64.BA per.capita.25to34.HS per.capita.35to44.HS per.capita.45to64.HS
+#                   35                   26                   17                   14                    4                    3                    1
+
+# Going by Variable Importance as determined by `rpart`, BAs at any age group
+# take precedence over HS graduates in any age group. 
 
 # `tree` model 02 ------------------------------------------------------------
 
 edu.tree02 <- tree(perCapitaFFL ~ ., data = edu.tree.all)
+
+par(mfrow = c(1, 1), family = "GillSans")
 plot(edu.tree02, branch = 0, lty = 3)
 text(edu.tree02, pretty = 0, use.n = T, cex = 0.85)
 
@@ -209,8 +216,7 @@ tidy(edu.rpart.r2)
 
 # join fitted with observed and plot
 edu.tree.rpart02 <- edu.tree.rpart02 %>%
-  left_join(augment(edu.rpart.r2)) 
-
+  left_join(augment(edu.rpart.r2))
 
 # plot fitted vs observed
 ggplot(edu.tree.rpart02, aes(per.capita.18to24.BA, 
@@ -248,13 +254,17 @@ ggplot(edu.tree.rpart02, aes(per.capita.18to24.BA,
   geom_text(aes(per.capita.18to24.BA, 
                 perCapitaFFL, 
                 label = NAME),
-            size = 3.5, 
+            size = 3.25, 
             hjust = -0.01, vjust = -0.55, 
             check_overlap = T, 
             family = "GillSans",
             data = edu.tree.rpart02) +
   expand_limits(x = c(400, 2000)) +
-  pd.scatter
+  pd.scatter + 
+  labs(x = "per capita 18-24 year old college graduates",
+       y = "per capita Federal Firearms Licenses")
+
+##### TODO: subset NAME for high and low outliers only. 
 
 # Plot rpart split - fitted values --------------------------------------------
 ggplot(edu.tree.rpart02, aes(per.capita.18to24.BA, 
@@ -344,6 +354,6 @@ ggplot(edu.tree.rpart02, aes(per.capita.18to24.BA,
         legend.title = element_text(size = 10),
         panel.grid = element_blank()) +
   labs(title = "FFLs ~ Educational Attainment - Regression Trees, Primary & Secondary splits",
-       x = "18-24 year old college graduates - per 100,000", 
-       y = "25-34 year old college graduates - per 100,000",
+       x = "per capita 18-24 year old college graduates", 
+       y = "per capita 25-34 year old college graduates",
        color = "per capita FFLs")
