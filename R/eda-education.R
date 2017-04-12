@@ -155,7 +155,7 @@ ggplot(perCapitaMap, aes(lon, lat,
 
 # discretize population into 20% quantiles
 ba.q <- quantile(edu$per.capita.18to24.BA,
-                 seq(0, 1, 0.25))
+                 seq(0, 1, 0.2))
 
 ba.q
 #       0%       20%       40%       60%       80%      100% 
@@ -173,7 +173,6 @@ edu <- edu %>%
 # merge new variable into map dataframe
 perCapitaMap <- left_join(edu, fifty_states, by = "NAME") %>%
   arrange(group, order)
-
 
 # create discrete palette
 edu.pal <- colorRampPalette(c("coral4", "antiquewhite2", "deepskyblue4"))(5)
