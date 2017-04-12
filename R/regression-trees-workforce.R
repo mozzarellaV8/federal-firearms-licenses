@@ -2,6 +2,8 @@
 # Federal Firearms License data
 # "INDUSTRY BY SEX FOR THE FULL-TIME, YEAR-ROUND CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER"
 # https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/
+# American Community Survey - Subject Tables - Table S2404
+# 2015 American Community Survey 1-Year Estimates
 
 # load data -------------------------------------------------------------------
 
@@ -19,6 +21,7 @@ source("~/GitHub/ATF-FFL/R/00-pd-themes.R")
 # ffl data and industry per capita data
 ffl <- read.csv("data/ffl-per-capita.csv", stringsAsFactors = F)
 wf <- read.csv("data/04-per-capita-clean/per-capita-workforce.csv", stringsAsFactors = F)
+str(wf)
 
 # remove population total variables
 wf <- wf %>% select(1:22, 25)
@@ -51,12 +54,14 @@ print(wf.tree01b)
 summary(wf.tree01b)
 
 par(mfrow = c(1, 1), family = "GillSans")
-plot(wf.tree01b, lty = 3)
-text(wf.tree01b, pretty = 0, cex = 0.9)
+plot(wf.tree01b, lty = 1)
+text(wf.tree01b, pretty = 0, cex = 0.8, all = T)
 
 # the results are similar to the rpart model, but with more terminal nodes
 # and slightly finer grain.
 
+print(wf.tree01b)
+summary(wf.tree01b)
 
 # Scatterplot: Primary & Secondary Rpart Splits -------------------------------
 
