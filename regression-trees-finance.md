@@ -12,9 +12,9 @@ How does annual household income relate - if at all - to Federal Firearms Licens
 - [Potential Future Directions](#potential-future-directions)
 
 # Annual Household Incomes
-"Financial Characteristics" data from the United States Census comprises population totals categorized into 11 brackets based on annual household income. 
+"Financial Characteristics" data from the United States Census<sup>[1](#notes)</sup>comprises population totals categorized into 11 brackets based on annual household income. 
 
-There are five stratifications at or beneath the Census-defined poverty threshold of $24,257 in annual income for a household of four<sup>[1](#notes)</sup>. The remaining categories can be argued as middle-class, with the highest reported income bracket at $150,000 and over. 
+There are five stratifications at or beneath the Census-defined poverty threshold of $24,257 in annual income for a household of four<sup>[2](#notes)</sup>. The remaining categories can be argued as middle-class, with the highest reported income bracket at $150,000 and over. 
 
 The categories as defined by the census:
 
@@ -84,11 +84,14 @@ There's significant different in variable choices and splits between the `rpart`
 
 ![rpart-01-scatter-splits](vis/eda-finance/rpart-01-scatter-splits-1-2.png)
 
-<img src="vis/eda-finance/rpart-01-scatter-splits-1-2.png" alt="rpart-01-scatter-splits" width="1200">
-
 How were the split criterion variables for the `rpart` model distributed? 
 
-<img src="vis/eda-finance/dist-rpart-splits.png" alt="dist-rpart-splits" width="480">
+<img src="vis/eda-finance/dist-rpart-splits.png" alt="dist-rpart-splits" width="600">
+ 
+Interesting to note a negative skew on the firstsplit ($50,000-$74,999) and positive skew in the second ($150,00 or more).
+
+- 1st split - $50,000-$74,999 - negative skew
+- 2nd split - $150,000 or more - positive skew
 
 ## first`tree` tree
 
@@ -151,5 +154,6 @@ Montana, Alaska, South Dakota, and Wyoming are heavily penalized by the robust r
 - Bureau of Labor Statistics
 
 # Notes
+<sup>1</sup> "Financial Characteristics", [American Community Survey](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/), subject tables, table S2503.
 
-<sup>1</sup> "Poverty Thresholds", [United States Census](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html).
+<sup>2</sup> "Poverty Thresholds", [United States Census](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html).
