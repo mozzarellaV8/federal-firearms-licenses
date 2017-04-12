@@ -57,15 +57,10 @@ summary(income.rpart01)
 
 
 # distribution of rpart splits
-par(mar = c(4, 4, 4, 4), mfrow = c(2, 2), family = "GillSans")
-hist(income$a.LessThan5000, xlab = "", ylab = "", 
-     main = "Less than $5,000")
-hist(income$h.50000to74999, xlab = "", ylab = "", 
-     main = "$50,000-74,999")
-hist(income$j.100000to149999, xlab = "", ylab = "", 
-     main = "$100,000-149,999")
-hist(income$k.150000.or.more, xlab = "", ylab = "", 
-     main = "$150,000 or more")
+par(mar = c(3, 3, 3, 3), mfrow = c(1, 2), 
+    cex.axis = 0.85, cex.main = 0.95, family = "GillSans")
+hist(income$h.50000to74999, main = "$50,000-74,999", xlab = "", ylab = "")
+hist(income$k.150000.or.more, main = "$150,000 or more", xlab = "", ylab = "")
 
 
 # tree - tree 01 - all features -----------------------------------------------
