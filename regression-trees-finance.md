@@ -153,7 +153,7 @@ These four states receieve less than half-weight in the robust regression model 
 
 Weighted Fit Values vs. Observed, weighted fit in red. Looking at the relative sizes of residuals - why did the model fit Kansas, Utah, and North Dakota so well? 
 
-![rr01 - weighted fit vs observed](vis/eda-finance/rr01-fit-vs-observed.png)
+![rr01 - weighted fit vs observed](vis/eda-finance/rr01-fit-vs-observed-00.png)
 
 ![rr01 - weighted fit vs observed scatter](vis/eda-finance/rr01-fit-vs-observed-02.png)
 
