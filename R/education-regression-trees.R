@@ -3,7 +3,6 @@
 # "Educational Attainment"
 # https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/
 
-
 # load data -------------------------------------------------------------------
 
 library(dplyr)
@@ -11,7 +10,6 @@ library(tidyr)
 library(broom)
 library(ggplot2)
 library(grDevices)
-
 
 # custom plot themes
 source("R/00-pd-themes.R")
