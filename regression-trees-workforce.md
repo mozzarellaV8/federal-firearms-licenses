@@ -1,40 +1,39 @@
-# Workforce Populations by Industry across the US
+# Workforce Populations by Industry
 
-# Exploratory Data Analysis
+"**_INDUSTRY BY SEX FOR THE FULL-TIME, YEAR-ROUND, CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER_**"
 
-The dataset from the US Census provides a range of different population totals by workforce sector, or industry. There are 20 total sectors that the Census measures across states. Population totals by industry provided were transformed into per capita figures (100,000), to scale with the Federal Firearms License data in addition to the US population in general.  
+The dataset from the US Census provides a range of different population totals by workforce sector, or industry<sup>[1](#notes)</sup>. There are 20 total sectors that the Census measures across states. Population totals by industry provided were transformed into per capita figures (100,000), to scale with the Federal Firearms License data in addition to the US population in general.  
 
 How does each industry interact with the number of Federal Firearms Licenses in a given state, if at all? 
 
-```{R}
-'data.frame':	50 obs. of  22 variables:
- $ CivilianPop.16             : num  30124 30579 29972 30497 31167 ...
- $ Hunting.Fishing.Agriculture: num  363 343 243 824 615 ...
- $ Mining.Oil.Gas             : num  180 1283.3 198.6 183.7 79.9 ...
- $ Construction               : num  1976 2117 2122 1988 2021 ...
- $ Manufacturing              : num  5170 1124 2543 5044 3681 ...
- $ Wholesale.Trade            : num  874 798 801 871 1092 ...
- $ Retail.Trade               : num  2950 3227 3325 3793 2921 ...
- $ Transportation.Warehousing : num  1257 2041 1345 1508 1433 ...
- $ Utilities                  : num  583 341 374 433 319 ...
- $ Information                : num  503 721 598 569 1015 ...
- $ Finance.Insurance          : num  1439 722 2177 1173 1459 ...
- $ Real.Estate                : num  451 504 756 382 740 ...
- $ Sciences.Technical         : num  1870 1584 1953 1208 2916 ...
- $ Management                 : num  14.8 28.1 27.2 30.2 30.2 ...
- $ Waste.Management           : num  972 935 1716 874 1479 ...
- $ Educational.Services       : num  2404 2107 2171 2772 2073 ...
- $ Health.Care                : num  4202 4575 4082 4445 3764 ...
- $ Arts.Entertainment         : num  254 388 580 244 658 ...
- $ Foodservice.Accommodation  : num  1339 1684 1784 1206 1757 ...
- $ OtherServices              : num  1328 1441 1209 1200 1434 ...
- $ PublicAdministration       : num  1994 4616 1967 1748 1682 ...
- $ perCapitaFFL               : num  25.29 81.82 26.16 42.53 6.49 ...
- ```
+# The Industries
+
+- Agriculture, forestry, fishing and hunting
+- Mining, quarrying, and oil and gas extraction	
+- Construction
+- Manufacturing
+- Wholesale Trade
+- Retail Trade
+- Transportation and Warehousing
+- Utilities
+- Information
+- Finance and insurance
+- Real estate and rental and leasing
+- Professional, scientific, and technical services
+- Management of companies and enterprises
+- Administrative and support and waste management services
+- Educational services
+- Health care and social assistance
+- Arts, entertainment, and recreation
+- Accommodation and food services
+- Other services, except public administration
+- Public administration
+
+# What's Trending in Industry? 
  
- Faceted scatterplots were created to get a broad sense of how the variables related to per capita Federal Firearms License numbers across the states. Quick linear and loess approximations were fit using `geom_smooth` from `ggplot2`.
+ Faceted scatterplots were created to get a broad sense of how the variables related to per capita Federal Firearms License numbers across the states. Rough linear and loess approximations were fit using `geom_smooth` from `ggplot2`.
  
- ### Upward with Firearms Licenses
+ ## Upward with Firearms Licenses
  
  ![positive-FFL-trends](vis/eda-workforce/workforce-facet-postives-color.png)
  
@@ -47,9 +46,20 @@ How does each industry interact with the number of Federal Firearms Licenses in 
  - Retail Trade
  - Utilities
 
-**Hunting & Fishing** was to be expected - but **Retail Trade** and **Utilities** raised questions. **Public Administration** appears to have too much scatter among the outliers to fully trust the lm/loess lines. Appearing regularly as outliers from the pack are Wyoming, Montana, and Alaska. 
+**Hunting & Fishing** was to be expected - but **Retail Trade** and **Utilities** raised questions. **Public Administration** appears to have too much scatter among the outliers to fully trust the lm/loess lines. Appearing regularly as outliers (again) are Wyoming, Montana, and Alaska. 
 
+## Wyoming Coal Country
 ![mining-oil-gas](vis/eda-workforce/workforce-eda-ffl-mining.png)
+
+Wyoming leads the country in coal production - which heavily involves the use of explosives which are classified as `Destructive Devices` under ATF-FFL regulation. Looking at industry, we may have a significant explanation for Wyoming's outsize Federal Firearms License count.
+
+## Why Utilities? 
+
+![ffl-utilities](vis/eda-workforce/)
+
+
+
+
 
  ### Downward with Firearms Licenses
  
@@ -406,6 +416,10 @@ glance(wf.m02b) %>% select(r.squared, adj.r.squared, p.value)
 ```
 
 
+
+# Notes
+
+<sup>1</sup> "INDUSTRY BY SEX FOR THE FULL-TIME, YEAR-ROUND CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER", [American Community Survey](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/), 2015 1-Year Estimates - Subject Tables, Table S2404
 
 
 
