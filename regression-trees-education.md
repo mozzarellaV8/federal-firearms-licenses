@@ -1,4 +1,5 @@
-# Significant Regression Tree Outputs
+
+- more young college graduates --> less firearms licenses 
 
 # Educational Attainment
 
