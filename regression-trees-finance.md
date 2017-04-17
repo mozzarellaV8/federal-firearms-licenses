@@ -8,7 +8,7 @@ How does annual household income relate - if at all - to Federal Firearms Licens
 - [Upward Trends Toward Center](#upward-trends-toward-center)
 - [Seemingly No Effect](#seemingly-no-effect)
 - [Regression Trees](#regression-trees-on-income)
-- [Income Outliers](#income-outliers)
+- [How Far Outlying?](#how-far-outlying)
 - [Potential Future Directions](#potential-future-directions)
 
 # Annual Household Incomes
@@ -88,7 +88,7 @@ How were the split criterion variables for the `rpart` model distributed?
 
 <img src="vis/eda-finance/dist-rpart-splits.png" alt="dist-rpart-splits" width="600">
  
-Interesting to note a negative skew on the firstsplit ($50,000-$74,999) and positive skew in the second ($150,00 or more).
+Interesting to note a negative skew on the first split ($50,000-$74,999) and positive skew in the second ($150,00 or more). Also interesting that the tree splits such that moving into the tails of each skew leads to lowest average FFL count. 
 
 - 1st split - $50,000-$74,999 - negative skew
 - 2nd split - $150,000 or more - positive skew
@@ -109,16 +109,17 @@ And how were the split variables for the `tree` model distributed?
 
 ![dist-tree-splits](vis/eda-finance/dist-tree-splits.png)
 
-# Income Outliers
+# How Far Outlying? 
 
-How to the outliers in a moel using annual income brackets behave? A robust regression model will be fit, and weights assigned to perceived outliers will be calculated.
+How far out are the outliers? 
+
+A robust regression model will be fit, and weights assigned to perceived outliers will be calculated.
 
 ```{R}
 library(MASS)
 
 # fit robust model
 rr01 <- rlm(perCapitaFFL ~ ., data = income)
-rr01
 
 # check weights
 rr01.weights <- data.frame(NAME = rownames(income),
@@ -143,11 +144,21 @@ rr01.weights[1:20, ]
 
 ![rr.weights01](vis/eda-finance/rr01-assigned-weights.png)
 
-Weighted Fit Values vs. Observed, weighted fit in red.
+- Montana
+- Alaska
+- South Dakota
+- Wyoming
+
+These four states receieve less than half-weight in the robust regression model - as could be expected, except perhaps for South Dakota. What is it about these states and their populations across income brackets? 
+
+Weighted Fit Values vs. Observed, weighted fit in red. Looking at the relative sizes of residuals - why did the model fit Kansas, Utah, and North Dakota so well? 
 
 ![rr01 - weighted fit vs observed](vis/eda-finance/rr01-fit-vs-observed.png)
 
-Montana, Alaska, South Dakota, and Wyoming are heavily penalized by the robust regression model. 
+![rr01 - weighted fit vs observed scatter](vis/eda-finance/rr01-fit-vs-observed-02.png)
+
+Judging from the scatterplot it appears that South Dakota was penalized heavily because of its relatively high population for the income bracket. It appears that both SD and Montana were penalized heavily for their extreme positions on both axes.
+
 
 # Potential Future Directions
 
