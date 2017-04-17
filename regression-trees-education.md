@@ -1,17 +1,17 @@
 
-# Higher Education, Less Firearms Licenses
+# Higher Education, Less Firearms 
 
-Generally, the more young college graduates per state, the less Federal Firearms licenses. 
+Generally, the more young college graduates per state, the less Federal Firearms licenses. _What's being taught?_ _What isn't being taught?_
 
 # Educational Attainment
 
 Regression trees were grown on Educational Attainment data<sup>[1](#notes) </sup> - per capita High School and College graduate figures by state. High School and College Graduate figures were further broken into five age groups, for ten variables total:
 
-- 18 to 24 HS 18 to 24 BA
+- 18 to 24 HS, 18 to 24 BA
 - 25 to 34 HS, 25 to 34 BA
 - 35 to 44 HS, 35 to 44 BA
 - 45 to 64 HS, 45 to 64 BA
-- 65+ HS, 65+ BA
+- 65 and older HS, 65 and older BA
 
 ![rpart model 02 - edu](vis/eda-education/rpart-model-02.png)
 
@@ -44,7 +44,7 @@ Essentially, the reddest states on the map should correspond to the highest aver
 # discretize population into 20% quantiles
 ba.q <- quantile(edu$per.capita.18to24.BA,
                  seq(0, 1, 0.2))
-
+                 
 ba.q
 #       0%       20%       40%       60%       80%      100% 
 # 442.5129  721.6580  840.9432  968.9943 1197.4317 1787.0535 
@@ -60,9 +60,15 @@ The general trend suggested by the model is:
 
  A couple of outliers in this model show up: North Dakota and Vermont, both boasting high numbers of young college graduates and firearms licenses. 
  
- # Educational Outliers
+ # Outliers in Education
  
- TODO: Robust Regression to find weights assigned to outliers.
+Robust Regression model
+
+Weights were assigned to Hawaii, Wyoming, Montana - and very slightly so to Kansas. 
+![rr01 weights](vis/eda-education/rr01-weights.png)
+
+
+![rr01 weighted fit vs. observed](vis/eda-education/rr01-weighted-fit-vs-observed.png) _weighted fit value in red_
  
  # Notes
  
