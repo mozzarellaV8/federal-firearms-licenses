@@ -90,7 +90,7 @@ Data from the [US Census](https://www.census.gov/acs/www/data/data-tables-and-to
 1. _"National Population Totals Datasets: 2010-2016"_, [US Census](https://www.census.gov/data/datasets/2016/demo/popest/nation-total.html).
 2. _"2010 Census Urban and Rural Classification and Urban Area Criteria"_, [US Census](https://www.census.gov/geo/reference/ua/urban-rural-2010.html). ![](presentation/vis/rural-urban-map-EDA-V3.jpg)
 3. _"Educational Attainment"_, [US Census - American Community Survey](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/), table S1501. High School and College graduation by one of five age brackets as defined by the US Census. ![education scatterplot](vis/eda-education/edu-ffl-facet.png)
-4. _"Finanacial Characteristics"_, [US Census - American Community Survey](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/), table S2503.  Annual Household Income, stratified into 12 brackets by the US Census. ![](vis/eda-education/edu-ffl-facet.png)
+4. _"Finanacial Characteristics"_, [US Census - American Community Survey](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/), table S2503.  Annual Household Income, stratified into 12 brackets by the US Census. ![](vis/eda-finance/facet-FFL-01.png)
 5. _"Industry by Class of Worker for the Civilian Employed Population 16 Years and Over"_, [US Census - American Community Survey](https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/), table S2407. All workforce sectors: ![workforce-facet-all](presentation/vis/workforce-facet-all.png) ![ffl~hunting](presentation/vis/workforce-eda-ffl-hunting.jpg)
 
 US Census data on education, finance, and industry were downloaded as CSVs from the Census site, and required a large amount of filtering and cleansing. For example:
@@ -161,16 +161,16 @@ For context, what _kind_ of FFLs are there? And what are the trends by type over
 - [FFL - derive per capita](R/ffl-derive-per-capita.R)
 
  <sup>4</sup> R scripts - cross-data import & cleansing:
-- [Cleanse - Educational Attainment](R/acs-cleanse-education.R)
-- [Cleanse - Financial Characteristics](R/acs-cleanse-finance.R)
-- [Cleanse - Legislature by State](R/acs-cleanse-legislature.R)
-- [Cleanse - Race](R/acs-cleanse-race.R)
-- [Cleanse - Rural-Urban Proportions](R/acs-cleanse-rural-urban.R)
-- [Cleanse - Workforce Sector Populations](R/acs-cleanse-workforce.R)
+- [Cleanse - Educational Attainment](R/education-cleanse.R)
+- [Cleanse - Financial Characteristics](R/income-cleanse.R)
+- [Cleanse - Legislature by State](R/legislature--cleanse.R)
+- [Cleanse - Race](R/race-cleanse.R)
+- [Cleanse - Rural-Urban Proportions](R/rural-urban-cleanse.R)
+- [Cleanse - Workforce Sector Populations](R/workforce-cleanse.R)
 
 <sup>5</sup> R scripts - exploratory data analysis
 - [EDA - Federal Firearms Licenses](R/ffl-EDA.R)
-- [EDA - Educational Attainment](R/eda-education.R)
-- [EDA - Legislature by State](R/eda-legislature.R)
-- [EDA - Workforce Sector](R/eda-workforce.R)
+- [EDA - Educational Attainment](R/education-eda.R)
+- [EDA - Legislature by State](R/legislature-eda.R)
+- [EDA - Workforce Sector](R/workforce-eda.R)
 
