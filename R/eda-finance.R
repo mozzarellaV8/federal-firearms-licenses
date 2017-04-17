@@ -16,6 +16,7 @@ library(ggplot2)
 
 # load themes and functions
 source("~/GitHub/ATF-FFL/R/00-pd-themes.R")
+source("~/GitHub/ATF-FFL/R/usa-map-prep.R")
 
 # load and bind all per capita data -------------------------------------------
 
@@ -32,6 +33,26 @@ str(income)
 # 50 observations of 13 variables
 income <- income %>%
   select(1, 3:13, 17)
+
+# Map Preparations ------------------------------------------------------------
+
+library(maps)
+library(mapproj)
+
+# load map data for US
+usa <- map_data("state")
+colnames(usa) <- c("lon", "lat", "group", "order", "NAME", "subregion")
+
+# capitalize state.name (function from tolower() documentation)
+source("~/GitHub/ATF-FFL/R/capwords.R")
+usa$NAME <- capwords(usa$NAME)
+
+# bind geo data to finance data
+finance.map <- income %>%
+  left_join(usa, by = "NAME") %>%
+  arrange(group, order)
+
+summary(finance.map)
 
 # Faceted plot of FFL ~ Income Bracket ----------------------------------------
 
@@ -74,7 +95,7 @@ income.long %>%
 
 # Facets - Extremes -----------------------------------------------------------
 
-# Poverty and Wealth
+# Poverty and Wealth - Scatterplot
 income.long %>%
   filter(category == "a.LessThan5000" | category == "k.150000.or.more") %>%
   ggplot(aes(perCapitaPop, 
@@ -88,13 +109,12 @@ income.long %>%
   geom_text(aes(perCapitaPop,
                 perCapitaFFL,
                 label = NAME),
-            hjust = -0.07, vjust = 1,
+            hjust = 1, vjust = 1,
             size = 2.75, 
             check_overlap = T) +
   facet_wrap(~ category, 
              scales = "free_x", 
              ncol = 1) +
-  expand_limits(x = c(0, 7400), y = 0) +
   pd.facet +
   theme(axis.text = element_text(size = 10.5),
         strip.text = element_text(size = 11),
@@ -102,6 +122,7 @@ income.long %>%
         panel.grid.minor = element_line(color = "gray94")) +
   labs(x = "per capita population ~ annual household income",
        y = "per capita firearms licenses")
+
 
 # Facets - Nulls --------------------------------------------------------------
 
@@ -119,7 +140,7 @@ income.long %>%
   geom_text(aes(perCapitaPop,
                 perCapitaFFL,
                 label = NAME),
-            hjust = -0.06, vjust = 1,
+            hjust = 1, vjust = 1,
             size = 3, 
             check_overlap = T) +
   facet_wrap(~ category, 
