@@ -97,10 +97,3 @@ ggplot(rr01.coef, aes(reorder(NAME, weighted.fit),
   labs(y = "per capita Federal Firearms Licenses", x = "",
        title = "FFLs ~ Education: Weighted Fit vs Observed Values")
 
-
-
-
-
-
-
-
