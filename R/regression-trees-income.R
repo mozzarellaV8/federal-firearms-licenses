@@ -15,7 +15,7 @@ library(tree)
 library(ggplot2)
 
 # load themes and functions
-source("~/GitHub/ATF-FFL/R/00-pd-themes.R")
+source("~/GitHub/federal-firearms-licenses/R/00-pd-themes.R")
 
 # load and bind all per capita data -------------------------------------------
 
@@ -36,7 +36,7 @@ income <- income %>%
 rownames(income) <- income$NAME
 income$NAME <- NULL
 
-# Rpart model 01 --------------------------------------------------------------
+# rpart model 01 --------------------------------------------------------------
 
 income.rpart01 <- rpart(perCapitaFFL ~ ., data = income)
 
@@ -518,3 +518,72 @@ rr01.coef %>%
         panel.grid.minor = element_line(color = "gray95")) +
   labs(x = "per capita population: annual household income $150,000 or more",
        y = "per capita Federal Firearms Licenses: weighted fit and observed")
+
+# rpart tree 02: outliers removed ---------------------------------------------
+
+# Montana, Alaska, South Dakota, and Wyoming were heavily penalized
+# by the robust regression model. 
+
+income$NAME <- rownames(income)
+
+# subset outliers
+income.out <- income %>%
+  filter(NAME != "Montana", NAME != "Alaska", NAME != "South Dakota", NAME != "Wyoming")
+
+# grow regression tree
+income.rpart02 <- rpart(perCapitaFFL ~ .-NAME, data = income.out)
+
+# plot regression tree
+par(mfrow = c(1, 1))
+rpart.plot(income.rpart02, 
+           type = 1, extra = 1, digits = 4, cex = 0.85, 
+           branch.lty = 1, branch.lwd = 1,
+           split.cex = 1.1, nn.cex = 0.9,
+           box.palette = "BuBn", 
+           pal.thresh = mean(income.out$perCapitaFFL),
+           round = 1,
+           family = "GillSans")
+
+# the larger the lower-middle class, the more FFLs.
+# but the outlier class is significant. 
+
+summary(income.out$g.35000to49999)
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#    3411    4679    5249    5074    5594    6224
+
+# split threshold: 4973
+hist(income.out$g.35000to49999)
+
+summary(income.out$c.10000to14999)
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#    1001    1592    1909    1905    2182    2729 
+
+# split threshold: 1986
+hist(income.out$c.10000to14999)
+
+# vis cross validation results
+plotcp(income.rpart02)
+
+# vis cross-validation results
+par(mfrow = c(1, 2))
+rsq.rpart(income.rpart02)
+
+# tree model 02: outliers removed ---------------------------------------------
+
+income.tree02 <- tree(perCapitaFFL ~ .-NAME, data = income.out)
+
+# visualize tree
+# plot the tree
+par(mfrow = c(1, 1), family = "GillSans")
+plot(income.tree02, lty = 3)
+text(income.tree02, pretty = 0, cex = 0.9)
+
+# prune the tree
+prune.tree02 <- prune.tree(income.tree02, best = 5)
+
+# plot the pruned
+par(mfrow = c(1, 1), family = "GillSans")
+plot(prune.tree02, lty = 3)
+text(prune.tree02, pretty = 0, cex = 0.9)
+
+
