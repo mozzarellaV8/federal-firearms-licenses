@@ -109,14 +109,15 @@ text(edu.tree01, pretty = 0, use.n = T, cex = 0.85)
 
 # remove male/female split
 edu.tree.all <- edu.tree %>%
-  select(-contains("Male"), -contains("Female"))
+  select(-contains("Male"), -contains("Female"), -contains("65"))
 
 # exploratory plot - distribution by education and age bracket
+# select age+education varialbes, `gather` into stacked dataframe
 edu.tree.all %>%
-  select(perCapitaFFL, 2:11) %>%
-  gather(key = age.bracket, value = per.capita.total, 2:11) %>%
+  select(perCapitaFFL, 2:9) %>%
+  gather(key = age.bracket, value = per.capita.total, 2:9) %>%
   ggplot(aes(per.capita.total, perCapitaFFL, fill = perCapitaFFL)) +
-  geom_point(aes(fill = perCapitaFFL), shape = 24, size = 1.4) +
+  geom_point(aes(fill = perCapitaFFL), shape = 21, size = 1.6) +
   facet_wrap(~ age.bracket, scales = "free_x", ncol = 2) +
   scale_fill_gradient2(low = "deepskyblue3",
                        mid = "antiquewhite2",
@@ -165,7 +166,7 @@ summary(edu.rpart02)
 edu.tree02 <- tree(perCapitaFFL ~ ., data = edu.tree.all)
 
 par(mfrow = c(1, 1), family = "GillSans")
-plot(edu.tree02, branch = 0, lty = 3)
+plot(edu.tree02, branch = 0, lty = 1)
 text(edu.tree02, pretty = 0, use.n = T, cex = 0.85)
 
 print(edu.tree02)
@@ -219,23 +220,22 @@ edu.tree.rpart02 <- edu.tree.rpart02 %>%
 # plot fitted vs observed
 ggplot(edu.tree.rpart02, aes(per.capita.18to24.BA, 
                              perCapitaFFL, 
-                             label = NAME, 
-                             size = perCapitaFFL)) +
-  geom_point(aes(color = perCapitaFFL)) +
+                             label = NAME)) +
+  geom_point(aes(color = perCapitaFFL), size = 2.5) +
   geom_point(aes(per.capita.18to24.BA,
-                 .fitted,
-                 size = 8,
-                 fill = .fitted),
-             shape = 23,
-             color = "white",
+                 .fitted, 
+                 color = .fitted),
+             shape = 10,
+             size = 2.75,
+             alpha = 1,
              data = edu.tree.rpart02) +
   geom_errorbar(aes(ymin = .fitted, 
                      ymax = perCapitaFFL), 
                 data = edu.tree.rpart02,
-                linetype = "dotted",
+                linetype = "solid",
                 color = "gray50", 
                 alpha = 0.90, 
-                size = 0.70) +
+                size = 0.250) +
   scale_color_gradient2(low = "deepskyblue4",
                         mid = "antiquewhite2",
                         high = "firebrick4", 
@@ -265,6 +265,7 @@ ggplot(edu.tree.rpart02, aes(per.capita.18to24.BA,
 ##### TODO: subset NAME for high and low outliers only. 
 
 # Plot rpart split - fitted values --------------------------------------------
+
 ggplot(edu.tree.rpart02, aes(per.capita.18to24.BA, 
                              .fitted, 
                              label = NAME, 
@@ -355,3 +356,7 @@ ggplot(edu.tree.rpart02, aes(per.capita.18to24.BA,
        x = "per capita 18-24 year old college graduates", 
        y = "per capita 25-34 year old college graduates",
        color = "per capita FFLs")
+
+
+
+
