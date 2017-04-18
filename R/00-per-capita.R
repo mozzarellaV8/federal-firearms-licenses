@@ -24,7 +24,7 @@
 
 # FFL per capita data ---------------------------------------------------------
 # population totals to use in computation 
-ffl.pop <- read.csv("data/04-per-capita-clean/per-capita-ffl.csv")
+ffl.pop <- read.csv("data/ffl-per-capita.csv")
 
 # function to compute per capita 2015 -----------------------------------------
 perCapita2015 <- function (x) {
