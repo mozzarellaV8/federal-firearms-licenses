@@ -89,5 +89,5 @@ education.perCapita <- education %>%
 
 # output per capita education data
 write.csv(education.perCapita, 
-          file = "data/05-per-capita-clean/per-capita-education.csv",
+          file = "data/04-per-capita-clean/per-capita-education.csv",
           row.names = F)
