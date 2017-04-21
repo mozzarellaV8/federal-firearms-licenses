@@ -37,7 +37,7 @@ sum(industry$total.workers) # 147,966,010
 sum(ffl$POPESTIMATE2015) - sum(industry$total.workers) 
 # There is a difference of 172,260,231
 
-# explore: totals -------------------------------------------------------------
+# explore: means-of-transportation totals -------------------------------------
 
 # select totals, bind firearms data, and compute per capita figures
 industry.perCapita <- industry %>%
@@ -59,7 +59,7 @@ colnames(industry.perCapita)[2:5] <- gsub("total.", "", colnames(industry.perCap
 colnames(industry.perCapita)[9:12] <- c("workers.per.capita", "a.drove.alone", "b.carpool",
                                         "c.public.transportation")
 
-# stack data and facet vis - total data
+# total data - stack data and facet vis
 industry.perCapita %>%
   select(NAME, perCapitaFFL, workers, 
          drove.alone, carpool, public.transportation) %>%
@@ -75,13 +75,14 @@ industry.perCapita %>%
   coord_flip() +
   labs(x = "", y = "")
 
-# stack data and facet vis - per capita data
+# per capita data - stack data and facet vis
 industry.perCapita %>%
   select(NAME, perCapitaFFL, 
          workers.per.capita, 
          a.drove.alone, b.carpool, c.public.transportation) %>%
   gather(key = means, value = total, 3:6) %>%
-  filter(means != "workers.per.capita") %>%
+  filter(means != "workers.per.capita" & 
+           means != "a.drove.alone") %>%
   ggplot(aes(reorder(NAME, total), 
              total, 
              fill = total)) +
@@ -89,20 +90,25 @@ industry.perCapita %>%
   facet_wrap(~ means, ncol = 1) +
   pd.facet + 
   theme(axis.text.x = element_text(size = 11),
-        axis.text.y = element_text(size = 8)) +
+        axis.text.y = element_text(size = 8),
+        plot.margin = margin(0, 0, 0, 0)) +
   coord_flip() +
   labs(x = "", y = "")
 
-# stack data and stacked vis - per capita data
+# per capita data - stack data and stacked vis --------------------------------
+
 industry.pc.stack <- industry.perCapita %>%
   select(NAME, perCapitaFFL, workers.per.capita, 
          a.drove.alone, b.carpool, c.public.transportation) %>%
   gather(key = means, value = total, 3:6) %>%
   filter(means != "workers.per.capita") %>%
-  arrange(total)
+  group_by(means) %>%
+  arrange(total, means) %>%
+  ungroup()
 
 # stacked bar chart
-ggplot(industry.pc.stack, aes(reorder(NAME, total), 
+ggplot(industry.pc.stack, 
+       aes(reorder(NAME, total), 
              total, 
              fill = means)) +
   geom_bar(stat = "identity", position = "stack") +
@@ -114,7 +120,49 @@ ggplot(industry.pc.stack, aes(reorder(NAME, total),
   guides(fill = guide_legend(reverse = F)) +
   labs(x = "", y = "", fill = "transporation")
 
+# faceted bar chart
+ggplot(industry.pc.stack,
+       aes(reorder(NAME, total),
+           total,
+           fill = means)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ means, ncol = 1) +
+  pd.facet +
+  coord_flip()
 
+# explore: departure time totals ----------------------------------------------
+
+departure.stack <- departure.time %>%
+  select(NAME, contains("total")) %>%
+  gather(key = time, value = percentage, 2:11)
+
+departure.stack$time <- gsub("\\.total", "", departure.stack$time)
+
+ggplot(departure.stack,
+       aes(NAME,
+           percentage,
+           fill = time)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(values = c("firebrick4",
+                               "firebrick3",
+                               "firebrick2",
+                               "firebrick1",
+                               "deepskyblue1",
+                               "deepskyblue2",
+                               "deepskyblue3",
+                               "deepskyblue4",
+                               "goldenrod2",
+                               "darkgoldenrod")) +
+  pd.theme +
+  theme(axis.text = element_text(size = 12),
+        axis.title = element_text(size = 11),
+        legend.position = "right") +
+  labs(x = "", y = "percentage of population") +
+  guides(fill = guide_legend(reverse = T)) +
+  coord_flip()
+
+# too many levels
+  
 
 
 
