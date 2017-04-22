@@ -1,7 +1,6 @@
 # Fundamental Firearms Factors
 
-- [Project Proposal](00-project-proposal.md)
-- [Milestone Report](01-milestone-report.md)
+- [What is this project trying to do?](#what-is-this-project-trying-to-do)
 - [What is a Federal Firearms License?](#what-is-a-federal-firearms-license)
 - [Notes](#notes)
 
@@ -13,7 +12,7 @@ What does the number of Federal Firearms Licenses in a given state say about tha
 
 Can data provided by the ATF on Federal Firearms License holders - when compared to various datasets from the **US Census**, **American Community Survey**,  **Energy Information Administration**, &c. - provide insight into the nature of American populations?
 
-Starting with basics: how do these firearms licesnses vary by state population? 
+Starting with basics: how do these firearms licenses vary by state population? 
 
 ![ffl~population-01](presentation/vis/ffl-eda-scatterplot-01-V2.jpg)
 
@@ -42,8 +41,13 @@ This [data](https://www.atf.gov/firearms/listing-federal-firearms-licensees-ffls
 
 ![FFL-History](presentation/assets/TypesOverTime.jpg)
 
+For more details:
+- [Project Proposal](00-project-proposal.md)
+- [Milestone Report](01-milestone-report.md)
+
 
 # Notes
+
 <sup>1</sup> _"Firearms Commerce Report in the United States"_, [atf.gov](https://www.atf.gov/resource-center/data-statistics).
 
 <sup>2</sup>Tufte-style sparkline plot originally translated to R by [Lukasz Piwek](http://motioninsocial.com/tufte/).
