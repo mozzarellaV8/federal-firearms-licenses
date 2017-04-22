@@ -33,7 +33,7 @@ How does each industry interact with the number of Federal Firearms Licenses in 
  
  Faceted scatterplots were created to get a broad sense of how the variables related to per capita Federal Firearms License numbers across the states. Rough linear and loess approximations were fit using `geom_smooth` from `ggplot2`.
  
- ## Upward with Firearms Licenses
+ ## Firearm-Friendly Industries
  
  ![positive-FFL-trends](vis/eda-workforce/workforce-facet-postives-color.png)
  
@@ -49,19 +49,21 @@ How does each industry interact with the number of Federal Firearms Licenses in 
 **Hunting & Fishing** was to be expected - but **Retail Trade** and **Utilities** raised questions. **Public Administration** appears to have too much scatter among the outliers to fully trust the lm/loess lines. Appearing regularly as outliers (again) are Wyoming, Montana, and Alaska. 
 
 ## Wyoming Coal Country
-![mining-oil-gas](vis/eda-workforce/workforce-eda-ffl-mining.png)
+![mining-oil-gas](presentation/vis/workforce-eda-ffl-mining-03.png)
 
-Wyoming leads the country in coal production - which heavily involves the use of explosives which are classified as `Destructive Devices` under ATF-FFL regulation. Looking at industry, we may have a significant explanation for Wyoming's outsize Federal Firearms License count.
+Wyoming leads the country in coal production - which heavily involves the use of explosives which are classified as `Destructive Devices` under ATF-FFL regulation. Looking at industry, we may have a significant explanation for Wyoming's outsize Federal Firearms License count. 
 
 ## Why Utilities? 
 
-![ffl-utilities](vis/eda-workforce/)
+![ffl-utilities](presentation/vis/workforce-eda-ffl-utilities-02.png)
 
+## How strong is the trend in Construction?
 
+![ffl-construction](presentation/vis/workforce-eda-ffl-construction.png)
 
+The linear and loess regression lines suggest a positive trend, but the scatter of the data suggests the outlier states **Alaska**, **Montana**, and **Wyoming** are exerting undue influence.  
 
-
- ### Downward with Firearms Licenses
+ ### No Need for Firearms Licenses
  
 ![negative-FFL-trends](vis/eda-workforce/workforce-facet-negatives-color.png)
 
@@ -80,7 +82,7 @@ One might expect **Sciences** and **Finance** to have correlate negatively with 
 
 ![waste-management](vis/eda-workforce/workforce-eda-ffl-waste.png)
 
-### No discernable trends
+### Take it or leave it
 
 ![null-FFL-trends](vis/eda-workforce/workforce-facet-null-effects-color.png)
 
@@ -96,7 +98,7 @@ The **Transportation & Warehousing** industry appears particularly ambivalent in
 
 ![transport-warehouse](vis/eda-workforce/workforce-eda-ffl-transportation.png)
 
-# Regression Trees - Industry
+# Regression Trees on Industry Data
 
 - Regression Trees on Workforce-Industry population data. 
 - 50 observations of 22 variables
