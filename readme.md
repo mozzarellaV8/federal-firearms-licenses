@@ -11,11 +11,15 @@
 
 What does the number of Federal Firearms Licenses in a given state say about that state? About the United States as a whole? 
 
+Can data provided by the ATF on Federal Firearms License holders - when compared to various datasets from the **US Census**, **American Community Survey**,  **Energy Information Administration**, &c. - provide insight into the nature of American populations?
+
+Starting with basics: how do these firearms licesnses vary by state population? 
+
 ![ffl~population-01](presentation/vis/ffl-eda-scatterplot-01-V2.jpg)
 
-Can data provided by the ATF on Federal Firearms License holders - when compared to various datasets from the **US Census**, **American Community Survey**, and **Energy Information Administration** - provide insight into the nature of American populations?
-
 ![ffl~population-01](presentation/vis/ffl-eda-scatterplot-log.jpg)
+
+State Population and per capita Federal Firearms License count - an inverse relationship? Interestingly - when visualized on a log scale, the outliers appear to be the states with lowest per capita firearms license counts. 
 
 # What is a Federal Firearms License?
 
