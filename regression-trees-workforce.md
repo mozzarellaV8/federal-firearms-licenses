@@ -48,14 +48,18 @@ How does each industry interact with the number of Federal Firearms Licenses in 
 
 **Hunting & Fishing** was to be expected - but **Retail Trade** and **Utilities** raised questions. **Public Administration** appears to have too much scatter among the outliers to fully trust the lm/loess lines. Appearing regularly as outliers (again) are Wyoming, Montana, and Alaska. 
 
-## Wyoming Coal Country
+## Wyoming Coal Country and Beyond
 ![mining-oil-gas](presentation/vis/workforce-eda-ffl-mining-03.png)
 
 Wyoming leads the country in coal production - which heavily involves the use of explosives which are classified as `Destructive Devices` under ATF-FFL regulation. Looking at industry, we may have a significant explanation for Wyoming's outsize Federal Firearms License count. 
 
+**Mining, Quarrying, Oil & Gas Extraction** is the only variable that unifies the three outlier states.
+
 ## Why Utilities? 
 
 ![ffl-utilities](presentation/vis/workforce-eda-ffl-utilities-02.png)
+
+What is it about the **Utilities** industry that suggests a positive relationship with the Federal Firearms Licenses?
 
 ## How strong is the trend in Construction?
 
@@ -123,7 +127,12 @@ While the other two variables corresponded to a negative trend with FFLs:
 - `Waste Mangaement`
 
 ### Who Needs Waste Management? 
-**Waste Management** is the key variable/workforce sector in this case, and initially showed a downward trend in regard to FFLs.  There are 10 states where there are less than 936 Waste Management workers per 100,000 residents. These states produce the largest average FFL count - nearly 61 - just about double the mean before the initial split.
+
+The shortened variable name in R is misleading - the full title is **Administrative and Support Services and Waste Management and Remediation Services**. Much more than "waste management" alone, this variable covers 'establishments performing routing support activities for the day to day operations of other organizations.'
+
+
+
+This is the key variable/workforce sector in this case, and initially showed a downward trend in regard to FFLs.  There are 10 states where there are less than 936 Waste Management workers per 100,000 residents. These states produce the largest average FFL count - nearly 61 - just about double the mean before the initial split.
 
 ### Where is the Earth Mined? 
 **Mining, Oil and Gas extraction** comprises the second split - and has what appears to be a very low value for split criteria (_N_ < 24.75, far lower than the 1st quantile). This is because of the outsize presence in Mining, Oil & Gas that **_Wyoming_** and **_North Dakota_** have. 
