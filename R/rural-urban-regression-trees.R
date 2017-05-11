@@ -82,14 +82,18 @@ summary(rural.urban.rp01)
 # POPDEN_URBAN 
 #            1 
 
+summary(rural.urban$POP_UA)
+#     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#   108700   957100  2487000  4386000  5204000 33430000
+
 # tree` model 01 -------------------------------------------------------------
 
 rural.urban.t01 <- tree(perCapitaFFL ~ ., data = rural.urban,
                         control = tree.control(50, minsize = 6))
 
 par(mfrow = c(1, 1), family = "GillSans")
-plot(rural.urban.t01, lty = 3, all = T)
-text(rural.urban.t01, pretty = 0, cex = 0.9, all = T)
+plot(rural.urban.t01, lty = 3)
+text(rural.urban.t01, pretty = 0, cex = 0.9)
 
 summary(rural.urban.t01)
 # Variables actually used in tree construction:
@@ -115,7 +119,6 @@ corrplot(urban.cor, method = "color",
          tl.col = "black", tl.cex = 0.75,
          addCoef.col = "black", number.cex = 0.7)
 
-
 # plot correlation matrix using ggcorrplot
 ggcorrplot(urban.cor, method = "square", 
            legend.title = "",
@@ -134,7 +137,6 @@ ggcorrplot(urban.cor, method = "square",
 # rpart model 02 --------------------------------------------------------------
 
 # remove `URBAN` variables
-
 urban02 <- rural.urban %>%
   select(-contains("URBAN"))
 
@@ -254,7 +256,7 @@ ggplot(urban02, aes(POP_UA, AREAPCT_UA,
 urban.pct <- rural.urban %>%
   select(contains("PCT"), -contains("URBAN"), perCapitaFFL)
   
-  # grow `rpart` regression tree
+# grow `rpart` regression tree
 rural.urban.rp03 <- rpart(perCapitaFFL ~ ., data = urban.pct)
 
 # plot `rpart` tree 01
@@ -284,7 +286,6 @@ text(rural.urban.t03, pretty = 0, cex = 0.9, all = T)
 # rpart model 04 --------------------------------------------------------------
 
 # remove all PCT variables
-# select only PCT variables
 urban.total <- rural.urban %>%
   select(-contains("PCT"), perCapitaFFL)
 
@@ -303,9 +304,6 @@ rpart.plot(rural.urban.rp04,
 
 print(rural.urban.rp04)
 summary(rural.urban.rp04)
-# Variable importance
-#    AREAPCT_UA AREAPCT_RURAL    AREAPCT_UC     POPPCT_UC     POPPCT_UA  POPPCT_RURAL   
-#            30            26            21            15             4             4   
 
 # tree model 04 ---------------------------------------------------------------
 
