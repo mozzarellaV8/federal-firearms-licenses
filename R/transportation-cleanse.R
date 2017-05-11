@@ -72,7 +72,7 @@ colnames(transport.industry) <- c("NAME",
                                   "public.admin.total", "public.admin.drove.alone", "public.admin.carpool", "public.admin.public",
                                   "armed.forces.total", "armed.forces.drove.alone", "armed.forces.carpool", "armed.forces.public")
 
-write.csv(transport.workplace, file = "data/03-additional-data/transporation-by-industry.csv",
+write.csv(transport.industry, file = "data/03-additional-data/transporation-by-industry.csv",
           row.names = F)
 
 # PLACE OF WORK  --------------------------------------------------------------
