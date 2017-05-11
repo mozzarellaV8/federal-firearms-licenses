@@ -296,20 +296,41 @@ summary(emp.pc$Construction)
 #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #    1558    2008    2194    2277    2482    3164 
 
-ggplot(emp.pc, aes(Construction, perCapitaFFL, label = NAME)) +
-  geom_point(size = 0.75, shape = 1) + 
+ggplot(emp.pc, aes(Construction, 
+                   perCapitaFFL, 
+                   label = NAME,
+                   size = perCapitaFFL)) +
   geom_smooth(method = "loess", se = F, size = 0.7,
               linetype = "dotted", color = "red3") +
   geom_smooth(method = "lm", se = F, size = 0.4,
               linetype = "dashed", color = "steelblue3") +
-  geom_text(size = 3.25, position = "jitter", 
-            alpha = 0.95, hjust = -0.1, vjust = 1,
-            check_overlap = T, family = "GillSans") +
+  scale_size(name = "per capita FFLs", 
+             range = c(2.75, 5.75), 
+             guide = F) +
+  scale_color_gradient2(low = "deepskyblue4",
+                       mid = "antiquewhite2",
+                       high = "firebrick4",
+                       midpoint = 52,
+                       guide = F) +
+  geom_point(aes(size = perCapitaFFL, 
+                 color = perCapitaFFL), 
+             shape = 19,
+             alpha = 0.8,
+             data = emp.pc) + 
+  geom_text(aes(size = perCapitaFFL), 
+            position = "jitter", 
+            alpha = 0.95, 
+            hjust = 0, vjust = 1.1,
+            check_overlap = T, 
+            family = "OpenSans",
+            data = emp.pc) +
   expand_limits(x = c(1400, 3500)) +
-  labs(title = "FFLs ~ Workforce Sector: Construction per 100k", 
+  labs(title = "Federal Firearms Licenses ~ Industry Sector: Construction", 
        y = "per capita Federal Firearms Licenses", 
-       x = "per capita workforce population", fill = "") +
-  pd.scatter
+       x = "per capita Construction workforce", fill = "") +
+  pd.scatter +
+  theme(axis.title = element_text(size = 14),
+        axis.text = element_text(size = 11))
 
 # FFLs ~ Public Administration -------------------------------------------------
 summary(emp.pc$PublicAdministration)
